@@ -45,6 +45,7 @@ class Task(db.Model):
         task = cls(title=title, content=content, status=False, 
                 deadline=deadline, author_id=user_id, parent_id=parent_id)
         db.session.add(task)
+        db.session.flush()
         db.session.commit()
         return task
 
@@ -57,7 +58,7 @@ class Task(db.Model):
     @classmethod
     def find_all(cls) -> list["Task"]:
         """Retourne la liste de toutes les Task"""
-        return cast(list["Task"], cls.query.all())
+        return cast(list["Task"], cls.query.filter_by(parent_id=None).all())
 
     @classmethod
     def find_by_author(cls, user_id: int) -> Optional[list["Task"]]:

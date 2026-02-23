@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% macro render_item(item, depth=0, max_depth=3) %}
-<details style="margin-left: {{ depth * 20 }}px">
+<details style="margin-left: {{ depth * 20 }}px !important">
     <summary>{{ item.title }}</summary>
     <p>{{ item.content }}</p>
-    {% if item.children %}
-        {% for child in item.children %}
+    {% if item.subtasks %}
+        {% for child in item.subtasks %}
             {{ render_item(child, depth + 1,max_depth) }}
         {% endfor %}
     {% endif %}
@@ -12,7 +12,7 @@
         <div id="view-mode">
             <button type="button" id="edit-btn--{{ item.id }}" >Ajouter une tache</button>
         </div>
-        <form action="{{ url_for('api.add_task', parent_id=item.id) }}" method="post" id="edit-mode">
+        <form action="{{ url_for('api.addTask', parent_id=item.id) }}" method="post" id="edit-mode">
             <label for="title-{{ item.id }}">Titre:</label>
             <input type="text" name="title-{{ item.id }}" id="title" required>
             <label for="content-{{ item.id }}">Description:</label>
@@ -26,7 +26,7 @@
 {% block content %}
 <section class="planning">
     {% for semaine in planning %}
-        {{ render_item(semaine) }}
+        {{ render_item(semaine, 1) }}
     {% endfor %}
 </section>
 {% endblock content %}
