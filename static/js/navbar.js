@@ -1,45 +1,49 @@
-const body = document.querySelector("body"),
-  sideBar = document.querySelector(".sideBar"),
-  withSub = document.querySelectorAll(".withSub .nav-link"),
-  sidebarOpen = document.querySelector(".sidebarOpen"),
-  logo = document.querySelector(".logo"),
-  darkLight = document.querySelector(".darkLight"),
-  notification = document.querySelector(".notification"),
-  notifications = document.querySelector(".notifications");
+const body = document.body;
+const sideBar = document.querySelector(".sideBar");
+const withSub = document.querySelectorAll(".withSub .nav-link");
+const sidebarOpen = document.querySelector(".sidebarOpen");
+const logo = document.querySelector(".logo");
+const darkLight = document.querySelector(".darkLight");
+const notification = document.querySelector(".notification");
+const notifications = document.querySelector(".notifications");
 
-sidebarOpen.onclick = () => {
-  sideBar.classList.toggle("close");
-  withSub.forEach((menus, i) => {
-    menus.classList.remove("openSubMenu");
-    notifications.classList.remove("open");
+const resetNavStates = () => {
+  withSub.forEach((menu) => {
+    menu.classList.remove("openSubMenu");
   });
+  notifications?.classList.remove("open");
 };
 
-logo.onclick = () => {
+const toggleSidebar = () => {
+  if (!sideBar) return;
   sideBar.classList.toggle("close");
-  withSub.forEach((menus, i) => {
-    menus.classList.remove("openSubMenu");
-    notifications.classList.remove("open");
-  });
+  resetNavStates();
 };
 
-darkLight.addEventListener("click", () => {
-  body.classList.toggle("dark");
-  if (darkLight.classList.contains("fa-moon-o")) { /*TODO*/
-    darkLight.classList.replace("fa-moon-o", "fa-sun-o");
-  } else {
-    darkLight.classList.replace("fa-sun-o", "fa-moon-o");
-  }
+if (sidebarOpen) {
+  sidebarOpen.addEventListener("click", toggleSidebar);
+}
+
+if (logo && logo !== sidebarOpen) {
+  logo.addEventListener("click", toggleSidebar);
+}
+
+if (darkLight) {
+  darkLight.addEventListener("click", () => {
+    body.classList.toggle("dark");
+  });
+}
+
+withSub.forEach((menu) => {
+  menu.addEventListener("click", () => {
+    menu.classList.toggle("openSubMenu");
+    sideBar?.classList.remove("close");
+    notifications?.classList.remove("open");
+  });
 });
 
-withSub.forEach((menus, i) => {
-  menus.addEventListener("click", () => {
-    menus.classList.toggle("openSubMenu");
-    sideBar.classList.remove("close");
-    notifications.classList.remove("open");
+if (notification && notifications) {
+  notification.addEventListener("click", () => {
+    notifications.classList.toggle("open");
   });
-});
-
-notification.onclick = () => {
-  notifications.classList.toggle("open");
-};
+}
