@@ -2,31 +2,49 @@
 {% macro render_item(item, depth=0, max_depth=3) %}
 <details style="margin-left: {{ depth * 20 }}px !important">
     <summary>{{ item.title }}<input type="checkbox" ></summary>
-    <p>{{ item.content }}</p>
+    <p style="margin-left: {{ (depth+1) * 20 }}px !important">{{ item.content }}</p>
     {% if item.subtasks %}
         {% for child in item.subtasks %}
             {{ render_item(child, depth + 1,max_depth) }}
         {% endfor %}
     {% endif %}
     {% if depth< max_depth %}
-        <div id="view-mode">
-            <button type="button" id="edit-btn--{{ item.id }}" >Ajouter une tache</button>
-        </div>
-        <form action="{{ url_for('api.addTask', parent_id=item.id) }}" method="post" id="edit-mode">
-            <label for="title-{{ item.id }}">Titre:</label>
-            <input type="text" name="title-{{ item.id }}" id="title" required>
-            <label for="content-{{ item.id }}">Description:</label>
-            <input type="text" name="content" id="content-{{ item.id }}" rows="2" required>
-            <button type="submit" id="submit-btn" >Enregistrer les modifications</button>
-            <button type="button" id="cancel-btn-{{ item.id }}" >Annuler</button>
-        </form>
+        <button
+                type="button"
+                class="add-task-btn"
+                data-item-id="{{ item.id }}"
+                data-action="{{ url_for('api.addTask', parent_id=item.id) }}"
+                style="margin-left: {{ (depth + 1) * 20 }}px !important">
+                + Ajouter une tâche
+            </button>
     {% endif %}
 </details>
 {% endmacro %}
 {% block content %}
 <section class="planning">
+    <h1>TO DO TREE</h1>
     {% for semaine in planning %}
         {{ render_item(semaine) }}
     {% endfor %}
 </section>
+
+<!-- Modal unique réutilisable pour tous les boutons -->
+<!-- Le dialog -->
+<dialog id="task-dialog">
+    <form method="post" id="modal-form">
+        <h2>Nouvelle tâche</h2>
+        <label for="modal-title-input">Titre</label>
+        <input type="text" id="modal-title-input" name="title" required>
+        <label for="modal-content-input">Description</label>
+        <textarea id="modal-content-input" name="content" rows="3"></textarea>
+        <button type="button" id="modal-cancel-btn">Annuler</button>
+        <button type="submit">Enregistrer</button>
+    </form>
+</dialog>
 {% endblock content %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/planning.js') }}"></script>
+{% endblock scripts %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/planning.css') }}" />
+{% endblock styles %}

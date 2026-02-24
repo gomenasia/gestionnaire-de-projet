@@ -1,0 +1,151 @@
+.planning {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+details[open] {
+    border-color: var(--accent);
+}
+
+summary {
+    padding: 16px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+}
+
+summary::before {
+    content: '▶';
+    font-size: 0.6rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+    display: inline-block;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+summary::-webkit-details-marker { display: none; }
+
+.item-content {
+    padding: 0 20px 12px 20px;
+}
+
+
+/* POP UP*/
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+
+    background: #FDF2F4;
+    border: 1px solid #2e2e3a;
+    border-radius: 12px;
+    padding: 28px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    color: #181818;
+}
+
+/*Boutton ajout d'une tache*/
+
+/* Fond assombri derrière le dialog */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+dialog h2 {
+    margin: 0 0 20px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+dialog label {
+    display: block;
+    font-size: 0.75rem;
+    color: #181818;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    margin-top: 14px;
+}
+
+dialog input,
+dialog textarea {
+    width: 100%;
+    background: #f0d7dc;
+    border: 1px solid #f0d7dc;
+    color: #e8e8f0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    resize: vertical;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+dialog input:focus,
+dialog textarea:focus {
+    border-color: #d6798c;
+}
+
+dialog button[type="button"] {
+    background: transparent;
+    border: 1px solid #2e2e3a;
+    color: #181818;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+dialog button[type="button"]:hover {
+    border-color: #6b6b80;
+    color: #75757a;
+}
+
+dialog button[type="submit"] {
+    background: #d6798c;
+    border: none;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: opacity 0.15s;
+}
+
+dialog button[type="submit"]:hover {
+    opacity: 0.85;
+}
+
+dialog .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
