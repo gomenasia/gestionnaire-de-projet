@@ -58,12 +58,13 @@ def api_tickets():
     })
 
 
-@api_bp.route("/<int:parent_id>/addTask", methods=["POST"])
+@api_bp.route("/addTask", methods=["POST"])
 @login_required
-def addTask(parent_id: int):
+def addTask():
     """Pour Ajouter une tache"""
+    parent_id = request.args.get("parent_id")
     title = request.form.get("title", "")
-    content = request.form.get("content", "recent")
+    content = request.form.get("content", "")
 
     try:
         task = Task.create_Task(
