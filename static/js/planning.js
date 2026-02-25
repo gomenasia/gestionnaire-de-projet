@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const response = await fetch(`/api/task?parent_id=${currentItemId}`, {
+        const response = await fetch(`/api/addTask?parent_id=${currentItemId}`, {
             method: 'POST',
             body: formData
         });

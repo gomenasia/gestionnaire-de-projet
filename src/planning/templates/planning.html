@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% macro render_item(item, depth=0, max_depth=3) %}
-<details style="margin-left: {{ depth * 20 }}px !important">
+<details style="margin-left: {{ depth * 20 }}px !important" class="">
     <summary>{{ item.title }}<input type="checkbox" ></summary>
     <p style="margin-left: {{ (depth+1) * 20 }}px !important">{{ item.content }}</p>
     {% if item.subtasks %}
