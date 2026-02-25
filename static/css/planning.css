@@ -18,6 +18,14 @@ details[open] {
     border-color: var(--accent);
 }
 
+details:not(.task0) > summary::before {
+    content: '└';
+    font-size: 0.6rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+    display: inline-block;
+}
+
 summary {
     padding: 16px 20px;
     cursor: pointer;
@@ -38,7 +46,7 @@ summary::before {
     display: inline-block;
 }
 
-details[open] > summary::before {
+details.task0[open] > summary::before {
     transform: rotate(90deg);
 }
 
@@ -46,6 +54,10 @@ summary::-webkit-details-marker { display: none; }
 
 .item-content {
     padding: 0 20px 12px 20px;
+}
+
+p.contenu{
+    padding-left: 10px;
 }
 
 
