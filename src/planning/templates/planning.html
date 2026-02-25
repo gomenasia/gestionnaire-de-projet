@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% macro render_item(item, depth=0, max_depth=3) %}
-<details style="margin-left: {{ depth * 20 }}px !important" class="">
-    <summary>{{ item.title }}<input type="checkbox" ></summary>
-    <p style="margin-left: {{ (depth+1) * 20 }}px !important">{{ item.content }}</p>
-    {% if item.subtasks %}
-        {% for child in item.subtasks %}
-            {{ render_item(child, depth + 1,max_depth) }}
-        {% endfor %}
-    {% endif %}
-    {% if depth< max_depth %}
+<details style="margin-left: {{ depth * 20 }}px !important" class="task{{depth}}">
+
+    <summary>
+        {{ item.title }}
+        <input type="checkbox" >
+        {% if depth< max_depth %}
         <button
                 type="button"
                 class="add-task-btn"
@@ -17,6 +14,14 @@
                 style="margin-left: {{ (depth + 1) * 20 }}px !important">
                 + Ajouter une tâche
             </button>
+    {% endif %}
+    </summary>
+    <p style="margin-left: {{ (depth+1) * 20 }}px !important" class="contenu">{{ item.content }}</p>
+    
+    {% if item.subtasks %}
+        {% for child in item.subtasks %}
+            {{ render_item(child, depth + 1,max_depth) }}
+        {% endfor %}
     {% endif %}
 </details>
 {% endmacro %}
