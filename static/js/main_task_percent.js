@@ -15,9 +15,12 @@ const upDateCheckboxes = () =>{
             })
             .then((response) => response.json())
             .then((data)=>{
+                console.log(data)
                 if(data.success) {
                     const progressBar = document.getElementById(data.parent_id);
                     progressBar.setAttribute("aria-valuenow", data.progress)
+                    progressBar.style.setProperty('--progress', data.progress + "%")
+                    localStorage.setItem(`progress-${data.parent_id}`,data.progress)
 
                 }else{
                     checkbox.checked = !checkbox.checked;
@@ -51,6 +54,21 @@ const upDateDetails = ()=>{
     });
 }
 
+const updateProgress = () =>{
+    const progressbars = document.querySelectorAll(".progressbar")
+
+    progressbars.forEach(progressBar =>{
+        const taks_id= progressBar.getAttribute('id')
+
+        if(localStorage.getItem(`progress-${taks_id}`) !== null){
+            const progress = localStorage.getItem(`progress-${taks_id}`)
+            progressBar.setAttribute("aria-valuenow", progress)
+            progressBar.style.setProperty('--progress', progress + "%")
+        }
+    })
+    
+}
+
 //progressBar
 const enableProgressbar = () => {
     const progressbars = document.querySelectorAll(".progressbar")
@@ -64,6 +82,7 @@ const enableProgressbar = () => {
 upDateCheckboxes();
 upDateDetails();
 enableProgressbar();
+updateProgress();
 
 
 

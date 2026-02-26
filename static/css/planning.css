@@ -1,3 +1,11 @@
+:root{
+    --dark-pink: #BF3F59;
+    --light-pink: #f0d7dc;
+    --font-color: #181818;
+    --soft-pink: #d6798c;
+    --lighter-pink:#FDF2F4;
+}
+
 .planning {
     display: flex;
     flex-direction: column;
@@ -226,19 +234,30 @@ dialog .modal-actions {
     margin-top: 20px;
 }
 /*Progress bar*/
+@property --progress{
+    syntax: "<length-percentage>";
+    inherits: false;
+    initial-value: 0%;
+}
+
+
 [role="progressbar"]{
     --size: 42px;
     --bar-width: 10px;
 
     width: var(--size);
     aspect-ratio: 1/1;
-    background: #BF3F59;
+    background: conic-gradient(
+        var(--dark-pink) var(--progress, 0),
+        var(--lighter-pink) 0%
+    );
     border-radius: 50%;
 
     position: relative;
     display: grid;
     place-items: center;
 
+    transition: --progress 500ms linear;
     &::after{
         content: attr(aria-valuenow) "%";
         font-size: 10px;
@@ -257,6 +276,22 @@ dialog .modal-actions {
     }
     span{
         display: none;
+    }
+}
+
+[role="progressbar"][aria-valuenow="100"]::after{
+    animation: progressComplete 0s forwards;
+    animation-delay: 600ms;
+}
+
+@keyframes progressComplete {
+    to {
+        font-family: "Font Awesome 6 Free";
+        content: "\f00c";
+        font-weight: 900;
+        font-size: 1.2em;
+        color: var(--lighter-pink);
+        background-color: #BF3F59;
     }
 }
 

@@ -94,5 +94,5 @@ def UpdateTaskStatus(task_id: int):
     return jsonify({
         "success": True,
         "parent_id": parent.id,
-        "progress": rate if parent else task.completion_rate
+        "progress": round(rate, 1) if parent else task.completion_rate
         }), 200

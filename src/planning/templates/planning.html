@@ -6,7 +6,7 @@
         <input type="checkbox" onclick="event.stopPropagation()" data-task-id="{{ item.id }}" {% if item.status %} checked {% endif %}>
         {{ item.title }}
         {% if depth<max_depth and item.subtasks %}
-            <div class="progressbar">
+            <div class="progressbar" id="{{ item.id }}">
                 <span>Il faut js</span>
             </div>
         {% endif %}
