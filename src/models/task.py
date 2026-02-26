@@ -59,6 +59,11 @@ class Task(db.Model):
     def find_all(cls) -> list["Task"]:
         """Retourne la liste de toutes les Task"""
         return cast(list["Task"], cls.query.filter_by(parent_id=None).all())
+    
+    @classmethod
+    def find_by_id(cls, task_id: int) -> Optional["Task"]:
+        """Retourne les tâches créées par un user"""
+        return cast(Optional["Task"], cls.query.filter_by(id=task_id).first())
 
     @classmethod
     def find_by_author(cls, user_id: int) -> Optional[list["Task"]]:
@@ -74,4 +79,24 @@ class Task(db.Model):
     def find_subtasks_by_parent_id(cls, parent_id: int) -> list["Task"]:
         """Retourne toutes les sous-tÃ¢ches d'une tÃ¢che par son ID."""
         return cast(list["Task"], cls.query.filter_by(parent_id=parent_id).all())
+    
+    @classmethod
+    def find_parent_by_parent_id(cls, parent_id:int) -> Optional["Task"]:
+        return cast(Optional["Task"], cls.query.filter_by(id=parent_id).first())
+
+    @property
+    def completion_count(self) -> int:
+        subtasks = self.find_subtasks_by_parent_id(self.id)
+        if not subtasks:
+            return (1 if self.status else 0,1)
+        completed = sum(1 for s in subtasks if s.status)
+        return (completed, len(subtasks))
+    
+    @property
+    def completion_rate(self) -> int:
+        subtasks = self.find_subtasks_by_parent_id(self.id)
+        if not subtasks:
+            return 100 if self.status else 0
+        completed = sum(1 for s in subtasks if s.status)
+        return (int)((completed / len(subtasks))*100)
 

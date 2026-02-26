@@ -7,21 +7,14 @@
 }
 
 details {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
     transition: border-color 0.2s;
-}
-
-details[open] {
-    border-color: var(--accent);
+    border-radius: 10px;
+    border: none;
 }
 
 details:not(.task0) > summary::before {
     content: '└';
     font-size: 0.6rem;
-    color: var(--accent);
     transition: transform 0.2s;
     display: inline-block;
 }
@@ -38,12 +31,13 @@ summary {
     user-select: none;
     border-radius: 8px;
     background-color: #f0d7dc;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 summary::before {
     content: '▶';
     font-size: 0.6rem;
-    color: var(--accent);
     transition: transform 0.2s;
     display: inline-block;
 }
@@ -69,7 +63,7 @@ p.contenu{
 
     width: 22px;
     height: 22px;
-    background-color: rgba(26, 150, 150, 0.363);
+    background-color: #BF3F59;
 
     padding: 2px;
     border-radius: 4px;
@@ -85,8 +79,49 @@ p.contenu{
     height: 100%;
 }
 
+.add-task-btn svg{
+    color: #FDF2F4;
+}
+
 summary:hover .add-task-btn{
     display: flex;
+}
+
+/* checkBox */
+input[type="checkbox"]{
+    appearance: none;
+    -webkit-appearance: none;
+    height: 1em;
+    width: 1em;
+    background-color: #FDF2F4;
+    border-radius: 0.2em;
+    border-color: transparent;
+    cursor: pointer;
+    display: flex;
+    outline: none;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="checkbox"]:after{
+    font-family: "Font Awesome 6 Free";
+    content: "\f00c";
+    font-weight: 900;
+    font-size: 1em;
+    color: #f0d7dc;
+    display: none;
+}
+
+input[type="checkbox"]:hover{
+    background-color: #dfabb5;
+}
+
+input[type="checkbox"]:checked{
+    background-color: #BF3F59;
+}
+
+input[type="checkbox"]:checked:after{
+    display: block;
 }
 
 
@@ -137,7 +172,7 @@ dialog textarea {
     width: 100%;
     background: #f0d7dc;
     border: 1px solid #f0d7dc;
-    color: #e8e8f0;
+    color: #151516;
     padding: 10px 14px;
     border-radius: 8px;
     font-size: 0.9rem;

@@ -80,3 +80,19 @@ def addTask():
         }), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+
+
+@api_bp.route("/task/<int:task_id>/status", methods=["PATCH"])
+def UpdateTaskStatus(task_id: int):
+    task = Task.find_by_id(task_id)
+    if task is None:
+        return jsonify({"success": False, "error": "Task non trouvée"}), 404
+    data = request.get_json()
+    task.update_status(data["status"])
+    parent = Task.find_parent_by_parent_id(task.parent_id)
+    return jsonify({
+        "success": True,
+        "parent_id": parent.id if parent else None,
+        "completion_rate": parent.completion_rate if parent else None,
+        "completion_count": list(parent.completion_count) if parent else None
+    }), 200
