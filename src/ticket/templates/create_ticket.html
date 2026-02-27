@@ -11,6 +11,20 @@
       <label for="title">Titre</label>
       <input id="title" name="title" type="text" required />
 
+      <label for="categorie">Categorie</label>
+      <select name="categorie" id="categorie">
+        <option value="question" selected>
+          <i class="fa-regular fa-circle-question"></i>Question</option>
+        <option value="bug" >
+          <i class="fa-solid fa-bug"></i>Bug</option>
+        <option value="test" >
+          <i class="fa-solid fa-flask"></i>Test</option>
+        <option value="git">
+          <i class="fa-brands fa-gitlab"></i>Git</option>
+        <option value="other">
+          <i class="fa-solid fa-asterisk"></i>Autre</option>
+      </select>         <!-- INCOMPLETE -->
+
       <label for="content">Description</label>
       <textarea id="content" name="content" rows="6" required></textarea>
 
