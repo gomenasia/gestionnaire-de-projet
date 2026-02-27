@@ -1,10 +1,3 @@
-:root{
-    --dark-pink: #BF3F59;
-    --light-pink: #f0d7dc;
-    --font-color: #181818;
-    --soft-pink: #d6798c;
-    --lighter-pink:#FDF2F4;
-}
 
 .planning {
     display: flex;
@@ -38,7 +31,7 @@ summary {
     gap: 10px;
     user-select: none;
     border-radius: 8px;
-    background-color: #f0d7dc;
+    background-color: var(--primary-color);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -71,7 +64,7 @@ p.contenu{
 
     width: 22px;
     height: 22px;
-    background-color: #BF3F59;
+    background-color: var(--darker-color);
 
     padding: 2px;
     border-radius: 4px;
@@ -80,7 +73,7 @@ p.contenu{
 }
 
 .add-task-btn i{
-    color: #FDF2F4;
+    color: var(--lighter-color);
     margin-right: 0;
     line-height: normal;
 }
@@ -95,7 +88,7 @@ input[type="checkbox"]{
     -webkit-appearance: none;
     height: 1em;
     width: 1em;
-    background-color: #FDF2F4;
+    background-color: var(--lighter-color);
     border-radius: 0.2em;
     border-color: transparent;
     cursor: pointer;
@@ -110,7 +103,7 @@ input[type="checkbox"]:after{
     content: "\f00c";
     font-weight: 900;
     font-size: 1em;
-    color: #f0d7dc;
+    color: var(--primary-color);
     display: none;
 }
 
@@ -119,7 +112,7 @@ input[type="checkbox"]:hover{
 }
 
 input[type="checkbox"]:checked{
-    background-color: #BF3F59;
+    background-color: var(--darker-color);
 }
 
 input[type="checkbox"]:checked:after{
@@ -135,14 +128,14 @@ dialog {
     transform: translate(-50%, -50%);
     margin: 0;
 
-    background: #FDF2F4;
+    background: var(--lighter-color);
     border: 1px solid #2e2e3a;
     border-radius: 12px;
     padding: 28px;
     width: 100%;
     max-width: 460px;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-    color: #181818;
+    color: var(--text-color);
 }
 
 /*Boutton ajout d'une tache*/
@@ -162,7 +155,7 @@ dialog h2 {
 dialog label {
     display: block;
     font-size: 0.75rem;
-    color: #181818;
+    color: var(--text-color);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 6px;
@@ -172,9 +165,9 @@ dialog label {
 dialog input,
 dialog textarea {
     width: 100%;
-    background: #f0d7dc;
-    border: 1px solid #f0d7dc;
-    color: #151516;
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--text-color);
     padding: 10px 14px;
     border-radius: 8px;
     font-size: 0.9rem;
@@ -186,13 +179,13 @@ dialog textarea {
 
 dialog input:focus,
 dialog textarea:focus {
-    border-color: #d6798c;
+    border-color: var(--secondary-color);
 }
 
 dialog button[type="button"] {
     background: transparent;
     border: 1px solid #2e2e3a;
-    color: #181818;
+    color: var(--text-color);
     padding: 8px 18px;
     border-radius: 8px;
     cursor: pointer;
@@ -206,7 +199,7 @@ dialog button[type="button"]:hover {
 }
 
 dialog button[type="submit"] {
-    background: #d6798c;
+    background: var(--secondary-color);
     border: none;
     color: #fff;
     padding: 8px 20px;
@@ -242,8 +235,8 @@ dialog .modal-actions {
     width: var(--size);
     aspect-ratio: 1/1;
     background: conic-gradient(
-        var(--dark-pink) var(--progress, 0),
-        var(--lighter-pink) 0%
+        var(--darker-color) var(--progress, 0),
+        var(--lighter-color) 0%
     );
     border-radius: 50%;
 
@@ -256,7 +249,7 @@ dialog .modal-actions {
         content: attr(aria-valuenow) "%";
         font-size: 10px;
         position: absolute;
-        background:#f0d7dc;
+        background:var(--primary-color);
         border-radius: inherit;
         top: 50%;
         left: 50%;
@@ -284,11 +277,11 @@ dialog .modal-actions {
         content: "\f00c";
         font-weight: 900;
         font-size: 1.2em;
-        color: var(--lighter-pink);
-        background-color: #BF3F59;
+        color: var(--lighter-color);
+        background-color: var(--darker-color);
     }
 }
 
 .progressbar:not([role="progressbar"]){
-    color:#BF3F59;
+    color:var(--darker-color);
 }

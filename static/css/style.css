@@ -10,16 +10,28 @@
 
 :root {
   --body-color: #F9F6EE;
-  --navBar-color: #FDF2F4;
-  --sideBar-color: #FDF2F4;
   --text-color: #181818;
+
+  --lighter-color:#FDF2F4;
+  --darker-color: #BF3F59;
+
+  --primary-color: #f0d7dc;
+  --secondary-color: #d6798c;
+  --third-color: #E7B192;
+
+  --icon-color: #5F9888;
 }
 
 body.dark {
   --body-color: #000;
-  --navBar-color: #242526;
-  --sideBar-color: #242526;
   --text-color: #fff;
+
+  --lighter-color:#242526;
+  --darker-color: #BF3F59;
+
+  --primary-color: #f0d7dc;
+  --secondary-color: #d6798c;
+  --third-color: #E7B192;
 }
 
 body {
@@ -42,11 +54,11 @@ header {
   top: 0;
   width: 100%;
   left: 0;
-  background-color: var(--navBar-color);
+  background-color: var(--lighter-color);
   padding: 1rem 2rem;
   gap: 1rem;
   z-index: 100;
-  box-shadow: 0 0 2px #004a79;
+  box-shadow: 0 0 2px var(--icon-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,12 +80,12 @@ nav a:hover {
   gap: 1rem;
 }
 
-a {
+p a {
   color: #1781f2;
   text-decoration: none;
 }
 
-a:hover {
+p a:hover {
   text-decoration: underline;
   color: #1d4ed8;
 }
@@ -140,7 +152,7 @@ button {
   align-items: center;
   justify-content: space-between;
   
-  background: var(--sideBar-color);
+  background: var(--lighter-color);
   padding: 10px 0;
   transition: all 0.5s ease;
 }
@@ -195,7 +207,7 @@ button {
 }
 
 .user_connexion:hover{
-  background-color: #00792e; 
+  background-color: var(--secondary-color);
   color: #f1f1f1;
   cursor: pointer;
 }
@@ -213,8 +225,9 @@ button {
   left: 0;
   height: 100%;
   padding: 80px 20px;
+  box-shadow: 0 0 2px var(--icon-color);
   overflow-y: scroll;
-  background-color: var(--sideBar-color);
+  background-color: var(--lighter-color);
   transition: all 0.5s ease;
 }
 
@@ -251,8 +264,8 @@ button {
 
 .nav-link:hover,
 .sub-link:hover {
-  color: #fff;
-  background: #000;
+  color: #000;
+  background-color : var(--third-color);
   cursor: pointer;
 }
 
@@ -324,7 +337,7 @@ button {
 
 .icon {
     margin-right: 0.5rem;
-    color: #aaa;
+    color: var(--icon-color);
 }
 
 .sideBar .withSub {
