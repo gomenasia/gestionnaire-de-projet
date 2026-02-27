@@ -1,8 +1,6 @@
 """Modèle message pour les conversation"""
 
-from datetime import date
-from typing import Any, cast
-from typing import Optional, cast
+from src.utils import get_utc_now
 from src.models.database import db
 
 
@@ -11,15 +9,16 @@ class Message(db.Model):
 
     __tablename__ = "Message"
 
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime(timezone=True), nullable=True)
+    id         = db.Column(db.Integer, primary_key=True)
+    content    = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=get_utc_now())
 
-    # Relation parent-enfant
-    author_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    chanelle_id = db.Column(db.Integer, db.ForeignKey('Task.id'), nullable=True)
+    # Clés étrangères
+    author_id  = db.Column(db.Integer, db.ForeignKey("user.id"),    nullable=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey("channel.id"), nullable=False)
 
-    parent = db.relationship('Channel', remote_side=[id], backref='subtasks')
-    author = db.relationship("User", back_populates="task")
+    # Relations
+    author  = db.relationship("User",    back_populates="messages")
+    channel = db.relationship("Channel", back_populates="messages")
 
 # INCOMPLETE

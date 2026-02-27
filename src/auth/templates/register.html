@@ -2,6 +2,14 @@
 
 {% block title %}Inscription{% endblock title %}
 
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/checkout_login_register.js') }}"></script>
+{% endblock scripts %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Auth.css') }}" />
+{% endblock styles %}
+
 {% block content %}
   <section class="card">
     <h2>Inscription</h2>
@@ -29,11 +37,3 @@
     </div>
   </section>
 {% endblock content %}
-
-{% block scripts %}
-  <script src="{{ url_for('static', filename='js/checkout_login_register.js') }}"></script>
-{% endblock scripts %}
-
-{% block styles %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/Auth.css') }}" />
-{% endblock styles %}

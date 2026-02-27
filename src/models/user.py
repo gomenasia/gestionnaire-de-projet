@@ -14,6 +14,7 @@ class User(db.Model):
 
     tickets = db.relationship("Ticket", back_populates="author", lazy=True)
     task = db.relationship("Task", back_populates="author")
+    messages = db.relationship("Message", back_populates="author")
 
     def __repr__(self) -> str:
         return f"<User {self.username} ({self.role})>"

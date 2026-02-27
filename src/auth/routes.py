@@ -164,3 +164,10 @@ def user_profile(user_id: int):
         user_tickets=user_tickets,
         is_own_profile=is_own_profile,
     )
+
+@auth_bp.route("/settings", methods=["GET", "POST"])
+@login_required
+def settings():
+    return render_template("settings.html")
+
+    # INCOMPLETE

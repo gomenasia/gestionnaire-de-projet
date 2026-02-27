@@ -24,6 +24,8 @@ class Ticket(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     author = db.relationship("User", back_populates="tickets")
 
+    channels = db.relationship("Channel", back_populates="channel")
+
     def __repr__(self) -> str:
         return f"<Ticket {self.title} (status: {self.status})>"
 

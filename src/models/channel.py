@@ -18,6 +18,7 @@ class Channel(db.Model):
     # Relation parent-enfant
     ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id"), nullable=False)
 
-    ticket = db.relationship('Ticket', remote_side=[id])
+    ticket = db.relationship('Ticket', back_populates="channel")
+    messages = db.relationship("Message", back_populates="channel")
 
     # INCOMPLETE
