@@ -28,11 +28,14 @@ if (logo && logo !== sidebarOpen) {
   logo.addEventListener("click", toggleSidebar);
 }
 
-if (darkLight) {
-  darkLight.addEventListener("click", () => {
-    body.classList.toggle("dark");
-  });
-}
+darkLight.addEventListener("click", () => {
+  body.classList.toggle("dark");
+  if (darkLight.classList.contains("fa-moon-o")) {
+    darkLight.classList.replace("fa-moon-o", "fa-sun-o");
+  } else {
+    darkLight.classList.replace("fa-sun-o", "fa-moon-o");
+  }
+});
 
 withSub.forEach((menu) => {
   menu.addEventListener("click", () => {
