@@ -1,6 +1,6 @@
 from functools import wraps
 from datetime import datetime, timezone
-from flask import flash, g, redirect, url_for, jsonify,request
+from flask import flash, g, redirect, url_for
 
 
 def get_utc_now():
