@@ -32,7 +32,7 @@ darkLight.addEventListener("click", () => {
   body.classList.toggle("dark");
   if (darkLight.classList.contains("fa-moon-o")) {
     darkLight.classList.replace("fa-moon-o", "fa-sun-o");
-  } else {
+  } else {  //REMOVE ME
     darkLight.classList.replace("fa-sun-o", "fa-moon-o");
   }
 });

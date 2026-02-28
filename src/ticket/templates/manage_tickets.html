@@ -87,7 +87,7 @@
           <i class="fa-solid fa-chevron-right"></i>
           Repondre au ticket
           <div class="dropdown">
-            {% for message in }
+            {% for message in Message.get_by_channel_id(ticket.channel_id)}
             <!--TODO-->
           </div>
         </div>
