@@ -96,11 +96,15 @@
               {% endfor %}
             {% endif %}
 
-            <!-- Formulaire (intercepté par JS, pas envoyé en HTTP) -->
-            <form class="form-message" data-channel-id="{{ ticket.channel_id }}">
-              <input type="text" name="content" placeholder="Répondre...">
-              <button type="submit">Envoyer</button>
-            </form>
+            {% if g.user %}
+              <!-- Formulaire (intercepté par JS, pas envoyé en HTTP) -->
+              <form class="form-message" data-channel-id="{{ ticket.channel_id }}">
+                <input type="text" name="content" placeholder="Répondre..." required>
+                <button type="submit">Envoyer</button>
+              </form>
+            {% else %}
+              <p class="message warning">Connectez-vous pour envoyer un message.</p>
+            {% endif %}
           </div>
         </div>
 
