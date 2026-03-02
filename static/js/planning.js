@@ -1,24 +1,25 @@
 
-const dialog = document.getElementById('task-dialog');
+const dialog_creation = document.getElementById('task-dialog');
+const dialog_update = document.getElementById('update-task-dialog')
 const optionBtns = document.querySelectorAll('.option-btn');
 const modifBtns = document.querySelectorAll('.modif-btn');
 const suprBtns= document.querySelectorAll('.suppr-btn')
 let currentItemId = null;
 
-
+//MOdal de creation de tache
 document.querySelectorAll('.add-task-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         currentItemId = btn.dataset.itemId;
-        dialog.showModal();
+        dialog_creation.showModal();
     });
 });
 
 document.getElementById('modal-cancel-btn').addEventListener('click', () => {
-    dialog.close();
+    dialog_creation.close();
 });
 
-dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) dialog.close();
+dialog_creation.addEventListener('click', (e) => {
+    if (e.target === dialog_creation) dialog_creation.close();
 });
 
 document.getElementById('modal-form').addEventListener('submit', async (e) => {
@@ -29,7 +30,7 @@ document.getElementById('modal-form').addEventListener('submit', async (e) => {
         body: formData
     });
     if (response.ok) {
-        dialog.close();
+        dialog_creation.close();
         location.reload();
     }
     if (response.status === 401) {
@@ -48,7 +49,7 @@ document.getElementById('notConnected').addEventListener('close', async (e) =>{
     window.location.href = "/auth/login";
 })
 
-
+//bouton option
 optionBtns.forEach(btn => {
     btn.addEventListener('click', (event) => {
         event.stopPropagation(); // empêche la propagation au <summary>
@@ -70,3 +71,50 @@ document.addEventListener('click', () => {
     document.querySelectorAll('.menu-option').forEach(m => m.classList.remove('active'));
 });
 
+//modal update de task 
+modifBtns.forEach((modif) =>{
+    modif.addEventListener('click', ()=> {
+        currentItemId= modif.dataset.itemId;
+        fetch(`/api/task/${currentItemId}/update`, {
+            method: 'GET',
+            headers: {
+                    'Content-Type': 'application/json'}
+        })
+        .then((response) => response.json())
+            .then((data) => {
+                if(data.success){
+                    const  titre = document.getElementById("update-title-input");
+                    titre.value = data.title;
+                    const content = document.getElementById("update-content-input");
+                    content.value = data.content;
+                    dialog_update.showModal()
+                }
+            })
+            .catch((error) => {
+                console.error("Erreur:", error);
+            })
+    })
+})
+
+document.getElementById("update-cancel-btn").addEventListener('click', ()=>{
+    dialog_update.close();
+})
+
+document.getElementById("modal-form_update").addEventListener('submit', (e) =>{
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    fetch(`/api/task/${currentItemId}/update`, {
+        method: 'POST',
+        body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if(data.success){
+            dialog_update.close();
+            location.reload();
+        }
+    })
+    .catch((error) => {
+        console.error("Erreur:", error);
+    })
+})

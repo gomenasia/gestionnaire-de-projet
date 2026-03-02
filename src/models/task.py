@@ -55,6 +55,13 @@ class Task(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def update(self, **kwargs) -> None:
+        for key, value in kwargs.items():
+            if hasattr(self, key) and key != "id":
+                setattr(self, key, value)
+        db.session.add(self)
+        db.session.commit()
+
     @classmethod
     def find_all(cls) -> list["Task"]:
         """Retourne la liste de toutes les Task"""

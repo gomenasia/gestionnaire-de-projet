@@ -100,6 +100,7 @@ def UpdateTaskStatus(task_id: int):
             "success": True
             }), 200
 
+
 @api_bp.route("/channel/<int:channel_id>/messages")
 @login_required
 def get_messages(channel_id):
@@ -109,3 +110,22 @@ def get_messages(channel_id):
         Message.id > since
     ).all()
     return jsonify([m.to_dict() for m in messages])
+
+
+@api_bp.route("/task/<int:task_id>/update", methods=["GET", "POST"])
+def update(task_id):
+    task = Task.find_by_id(task_id)
+    if task is None:
+        return jsonify({"success": False, "error": "Task non trouvée"}), 404
+    if request.method == "GET":
+        return jsonify({
+            "success": True,
+            "title": task.title,
+            "content": task.content
+        }), 200
+    else:
+        title = request.form.get("title", "")
+        content = request.form.get("content", "")
+        task.update(title=title, content=content)
+        return jsonify({
+            "success": True}), 200
