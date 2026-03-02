@@ -2,7 +2,8 @@
     const ticketList = document.querySelector(".ticket-list")
     if (!ticketList) {
         return
-    }
+    }        
+
 
     const socket = typeof window.io === "function"
         ? window.io({ transports: ["websocket", "polling"] })
@@ -25,6 +26,9 @@
             if (isOpen && socket && !joinedChannels.has(channelId)) {
                 socket.emit("join", { channel_id: Number(channelId) })
                 joinedChannels.add(channelId)
+
+                const messagerie = document.getElementById(`message_display-${channelId}`)
+                messagerie.scrollTop = messagerie.scrollHeight;
             }
         })
     })
@@ -79,6 +83,8 @@
         } else {
             panel.appendChild(p)
         }
+
+        panel.scrollTop = panel.scrollHeight; // permet de scroll en bas auto
     })
 
     socket.on("error_message", (payload) => {
