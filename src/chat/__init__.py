@@ -1,37 +1,52 @@
-from flask import Blueprint, g
+from flask import Blueprint, session
 from flask_socketio import emit, join_room
+
+from app import socketio
+from src.models import User
 from src.models.database import db
 from src.models.message import Message
-from src.models.channel import Channel
-from src.models.ticket import Ticket
-from app import socketio
 
 chat_bp = Blueprint("chat", __name__)
 
+
 @socketio.on("join")
 def on_join(data):
-    channel_id = data["channel_id"]
-    join_room(f"channel_{channel_id}")
+    channel_id = data.get("channel_id")
+    if channel_id is None:
+        return
+
+    join_room(f"channel_{int(channel_id)}")
+
 
 @socketio.on("send_message")
 def on_message(data):
-    channel_id = data["channel_id"]
-    content    = data["content"].strip()
-
-    if not content:
+    user_id = session.get("user_id")
+    if user_id is None:
+        emit("error_message", {"message": "Vous devez être connecté pour envoyer un message."})
         return
 
-    msg = Message(
-        content    = content,
-        author_id  = g.id,
-        channel_id = channel_id
-    )
+    user = User.find_by_id(user_id)
+    if user is None:
+        emit("error_message", {"message": "Utilisateur introuvable."})
+        return
+
+    channel_id = data.get("channel_id")
+    content = data.get("content", "").strip()
+
+    if channel_id is None or not content:
+        return
+
+    msg = Message(content=content, author_id=user.id, channel_id=int(channel_id))
     db.session.add(msg)
     db.session.commit()
 
-    emit("new_message", {
-        "id":       msg.id,
-        "content":  msg.content,
-        "author":   g.username,
-        "channel_id": channel_id
-    }, to=f"channel_{channel_id}")
+    emit(
+        "new_message",
+        {
+            "id": msg.id,
+            "content": msg.content,
+            "author": user.username,
+            "channel_id": int(channel_id),
+        },
+        to=f"channel_{int(channel_id)}",
+    )
