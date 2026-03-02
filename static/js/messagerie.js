@@ -4,12 +4,6 @@
         return
     }
 
-    const isAuthenticated = document.querySelector(".form-message") !== null
-
-    const socket = io({
-        transports: ["websocket", "polling"]
-    })
-
     const socket = typeof window.io === "function"
         ? window.io({ transports: ["websocket", "polling"] })
         : null
@@ -27,8 +21,10 @@
 
             panel.classList.toggle("collapsed")
 
-            if (!panel.classList.contains("collapsed")) {
+            const isOpen = !panel.classList.contains("collapsed")
+            if (isOpen && socket && !joinedChannels.has(channelId)) {
                 socket.emit("join", { channel_id: Number(channelId) })
+                joinedChannels.add(channelId)
             }
         })
     })
@@ -54,15 +50,6 @@
                 return
             }
 
-            if (!input) {
-                return
-            }
-
-            const content = input.value.trim()
-            if (!content) {
-                return
-            }
-
             socket.emit("send_message", {
                 content,
                 channel_id: Number(channelId)
@@ -72,7 +59,7 @@
     })
 
     socket.on("new_message", (msg) => {
-        const panel = document.querySelector(`#discussion-${msg.channel_id}`)
+        const panel = document.getElementById(`discussion-${msg.channel_id}`)
         if (!panel) {
             return
         }
@@ -81,22 +68,21 @@
         p.innerHTML = `<strong>${msg.author}</strong> : ${msg.content}`
 
         const form = panel.querySelector("form")
+        const notice = panel.querySelector(".message.warning")
+
         if (form) {
             form.before(p)
-            return
-        }
-
-        const notice = panel.querySelector(".message.warning")
-        if (notice) {
+        } else if (notice) {
             notice.before(p)
-            return
+        } else {
+            panel.appendChild(p)
         }
-
-        panel.appendChild(p)
     })
 
-    // Si non connecté, on n'envoie jamais de message, mais on laisse l'affichage en temps réel.
-    if (!isAuthenticated) {
-        return
-    }
+    socket.on("error_message", (payload) => {
+        if (!payload || !payload.message) {
+            return
+        }
+        console.warn(payload.message)
+    })
 })()

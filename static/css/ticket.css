@@ -114,9 +114,9 @@
 }
 
 .discussion {
-    display: block;
+    background-color: red
 }
 
 .discussion.collapsed {
-    display: none;
+    background-color: greenyellow;
 }
