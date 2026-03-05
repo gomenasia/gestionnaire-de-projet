@@ -16,6 +16,7 @@ class Ticket(db.Model):
     title = db.Column(db.String(150), nullable=False)
     content = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), default="en_attente", nullable=False)
+    categorie = db.Column(db.String(20), default="question", nullable=False)
     deadline = db.Column(db.DateTime(timezone=True), nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: get_utc_now(), nullable=False)
     updated_at = db.Column(db.DateTime(timezone=True), default=lambda: get_utc_now(), onupdate=lambda: get_utc_now(), nullable=False)
@@ -45,11 +46,24 @@ class Ticket(db.Model):
         """Retourne la liste de tous les tickets."""
         return cast(list[Ticket], cls.query.filter_by(author_id=user_id).order_by(Ticket.created_at.desc()).all())
     
+    @classmethod
+    def find_all_by_status(cls, targeted_status: str) -> list["Ticket"]:
+        """Retourne la liste de tous les tickets du statuss specifier."""
+        return cast(list[Ticket], cls.query.filter_by(status = targeted_status).order_by(Ticket.created_at.desc()).all())
+    
+    @classmethod
+    def find_all_by_categorie(cls, targeted_categorie: str) -> list["Ticket"]:
+        """Retourne la liste de tous les tickets de la categorie specifier."""
+        return cast(list[Ticket], cls.query.filter_by(categorie = targeted_categorie).order_by(Ticket.created_at.desc()).all())
+    
+
+
     def to_dict(self) -> dict:
         return {
             "id": self.id,
             "title": self.title,
             "content": self.content,
+            "categorie": self.categorie,
             "status": self.status,
             "deadline": self.deadline.isoformat() if self.deadline else None,
             "created_at": self.created_at.isoformat(),

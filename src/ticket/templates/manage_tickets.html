@@ -30,7 +30,8 @@
 
       <div class="filter-item">
         <label for="categorie">Categorie</label>
-        <select name="sort" id="sort">
+        <select name="categorie" id="categorie">
+          <option value="all" {% if current_status == 'all' %}selected{% endif %}>Tous</option>
           <option value="question" {% if current_sort == 'question' %}selected{% endif %}>Question</option>
           <option value="bug" {% if current_sort == 'bug' %}selected{% endif %}>Bug</option>
           <option value="test" {% if current_sort == 'test' %}selected{% endif %}>Test</option>
@@ -54,7 +55,7 @@
 
   <section class="ticket-list">
     {% for ticket in tickets %}
-      <article class="ticket">
+      <article class="ticket {{ ticket.categorie }}">
         <div class="ticket-head">
           <h3>{{ ticket.title }}</h3>
           {% if g.user.id %}

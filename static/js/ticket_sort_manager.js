@@ -4,6 +4,7 @@
 
     const statusSelect = form.querySelector('#status');
     const sortSelect = form.querySelector('#sort');
+    const categorieSelect = form.querySelector('#categorie');
     const searchInput = form.querySelector('#q');
     const authorInput = form.querySelector('#author');
 
@@ -38,7 +39,7 @@
         debounceTimer = window.setTimeout(submitFilters, 750);
     };
 
-    [statusSelect, sortSelect].forEach((element) => {
+    [statusSelect, sortSelect, categorieSelect].forEach((element) => {
         if (!element) return;
         element.addEventListener('change', submitFilters);
     });

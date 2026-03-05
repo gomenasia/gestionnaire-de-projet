@@ -103,6 +103,7 @@ def manage_ticket():
     """Affiche la liste des tickets avec filtres, recherche et tri."""
     status = request.args.get("status", "all")
     sort = request.args.get("sort", "recent")
+    categorie = request.args.get("categorie", "all")
     q = request.args.get("q", "").strip()
     author = request.args.get("author", "").strip()
 
@@ -110,6 +111,9 @@ def manage_ticket():
 
     if status != "all":
         query = query.filter(Ticket.status == status)
+
+    if categorie != "all":
+        query = query.filter(Ticket.categorie == categorie) 
 
     if q:
         query = query.filter(

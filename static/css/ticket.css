@@ -55,6 +55,33 @@
     font-size: 0.8rem;
 }
 
+/* ========================== categorie ========================== */
+
+.ticket.question {
+    background: color-mix(in srgb, #2A90CB 30%, transparent);
+    box-shadow: 0 -2px 2px #1C6087;
+}
+
+.ticket.bug {
+    background: color-mix(in srgb, #F6131E 30%, transparent);
+    box-shadow: 0 -2px 2px #C50711;
+}
+
+.ticket.test {
+    background: color-mix(in srgb, #C6D709 30%, transparent);
+    box-shadow: 0 -2px 2px #909D07;
+}
+
+.ticket.git {
+    background: color-mix(in srgb, #e84e31 30%, transparent);
+    box-shadow: 0 -2px 2px #99421f;
+}
+
+.ticket.other {
+    background: color-mix(in srgb, #D6D6D6 30%, transparent);
+    box-shadow: 0 -2px 2px #B8B8B8;
+}
+
 /* ========================== status ========================== */
 .status.en_attente {
     background: #fef9c3;
@@ -68,19 +95,13 @@
     background: #dcfce7;
 }
 
- /* ============================ admin response ============================ */
-.admin-response {
-    margin-top: 0.7rem;
-    padding: 0.5rem;
-    background: #eff6ff;
-    border-radius: 8px;
-}
+ /* ============================ modif ticket ============================ */
 
 .author-actions {
     margin-top: 0.5rem;
 }
 
-.link-button {
+.link-button { /* TODO remove me */
     display: inline-block;
     background: #2563eb;
     color: white;

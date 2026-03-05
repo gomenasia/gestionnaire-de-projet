@@ -259,7 +259,7 @@ nav a:hover {
 .nav-link:hover,
 .sub-link:hover {
   color: #000;
-  background-color : color-mix(in srgb, var(--third-color) 40%, transparent); ;
+  background-color : color-mix(in srgb, var(--third-color) 40%, transparent);
   cursor: pointer;
 }
 
