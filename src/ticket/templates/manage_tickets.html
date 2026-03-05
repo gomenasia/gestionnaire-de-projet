@@ -31,12 +31,12 @@
       <div class="filter-item">
         <label for="categorie">Categorie</label>
         <select name="categorie" id="categorie">
-          <option value="all" {% if current_status == 'all' %}selected{% endif %}>Tous</option>
-          <option value="question" {% if current_sort == 'question' %}selected{% endif %}>Question</option>
-          <option value="bug" {% if current_sort == 'bug' %}selected{% endif %}>Bug</option>
-          <option value="test" {% if current_sort == 'test' %}selected{% endif %}>Test</option>
-          <option value="git" {% if current_sort == 'git' %}selected{% endif %}>Git</option>
-          <option value="other" {% if current_sort == 'other' %}selected{% endif %}>Autre</option>
+          <option value="all" {% if current_categorie == 'all' %}selected{% endif %}>Tous</option>
+          <option value="question" {% if current_categorie == 'question' %}selected{% endif %}>Question</option>
+          <option value="bug" {% if current_categorie == 'bug' %}selected{% endif %}>Bug</option>
+          <option value="test" {% if current_categorie == 'test' %}selected{% endif %}>Test</option>
+          <option value="git" {% if current_categorie == 'git' %}selected{% endif %}>Git</option>
+          <option value="other" {% if current_categorie == 'other' %}selected{% endif %}>Autre</option>
         </select>
       </div>
 

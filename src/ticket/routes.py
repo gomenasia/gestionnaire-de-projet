@@ -36,6 +36,7 @@ def status_update_ticket(ticket_id: int):
 def create_ticket():
     if request.method == "POST":
         title = request.form.get("title", "").strip()
+        categorie = request.form.get("categorie", "").strip()
         content = request.form.get("content", "").strip()
         deadline_input = request.form.get("deadline", "").strip()
         deadline = parse_deadline(deadline_input)
@@ -53,11 +54,11 @@ def create_ticket():
             return redirect(url_for("auth.login"))
 
 
-        ticket = Ticket.create(title=title, content=content, deadline=deadline, author=g.user)
+        ticket = Ticket.create(title=title, categorie=categorie, content=content, deadline=deadline, author=g.user)
 
         channel = Channel.create(name=f"Discussion ticket #{ticket.id}")
         
-        ticket.update(channel_id = channel.id)
+        ticket.update(channel_id = channel.id) # necessaire car on modife le ticket avec l'ajout de la clef etrangere channel _id
 
         flash("Ticket créé avec succès.", "success")
         return redirect(url_for("ticket.manage_ticket"))
@@ -137,6 +138,7 @@ def manage_ticket():
         tickets=tickets,
         current_status=status,
         current_sort=sort,
+        current_categorie=categorie,
         current_q=q,
         current_author=author,
         now=now,

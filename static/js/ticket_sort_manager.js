@@ -48,5 +48,6 @@
         if (!element) return;
         element.addEventListener('input', submitWithDebounce);
         element.addEventListener('search', submitFilters);
+        element.focus()
     });
 })();

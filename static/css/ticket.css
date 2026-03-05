@@ -59,27 +59,27 @@
 
 .ticket.question {
     background: color-mix(in srgb, #2A90CB 30%, transparent);
-    box-shadow: 0 -2px 2px #1C6087;
+    box-shadow: -2px 0 #1C6087;
 }
 
 .ticket.bug {
     background: color-mix(in srgb, #F6131E 30%, transparent);
-    box-shadow: 0 -2px 2px #C50711;
+    box-shadow: -2px 0 #C50711;
 }
 
 .ticket.test {
     background: color-mix(in srgb, #C6D709 30%, transparent);
-    box-shadow: 0 -2px 2px #909D07;
+    box-shadow: -2px 0 #909D07;
 }
 
 .ticket.git {
     background: color-mix(in srgb, #e84e31 30%, transparent);
-    box-shadow: 0 -2px 2px #99421f;
+    box-shadow: -2px 0 #99421f;
 }
 
 .ticket.other {
     background: color-mix(in srgb, #D6D6D6 30%, transparent);
-    box-shadow: 0 -2px 2px #B8B8B8;
+    box-shadow: -2px 0 #B8B8B8;
 }
 
 /* ========================== status ========================== */
