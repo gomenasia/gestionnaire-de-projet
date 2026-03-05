@@ -19,7 +19,7 @@ class Ticket(db.Model):
     categorie = db.Column(db.String(20), default="question", nullable=False)
     deadline = db.Column(db.DateTime(timezone=True), nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: get_utc_now(), nullable=False)
-    updated_at = db.Column(db.DateTime(timezone=True), default=lambda: get_utc_now(), onupdate=lambda: get_utc_now(), nullable=False)
+    updated_at = db.Column(db.DateTime(timezone=True), default=lambda: get_utc_now(), nullable=False)
 
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     author = db.relationship("User", back_populates="tickets")

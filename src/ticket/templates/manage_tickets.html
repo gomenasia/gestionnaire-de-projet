@@ -85,7 +85,7 @@
 
         {% if g.user and g.user.id == ticket.author_id %}
           <div class="author-actions">
-            <a class="link-button" href="{{ url_for('ticket.edit_ticket', ticket_id=ticket.id) }}">Modifier mon ticket</a>
+            <a class="link-button" data-item-id="{{ ticket.id }}">Modifier mon ticket</a>
           </div>
         {% endif %}  <!-- FIXME -->
 
@@ -124,10 +124,24 @@
       <p>Aucun ticket ne correspond à vos critères.</p>
     {% endfor %}
   </section>
+
+  <!--POP UP pour update un ticket-->
+  <dialog id="update-ticket-dialog">
+    <form method="post" id="modal-form_update">
+        <h2>Modification de la tâche</h2>
+        <label for="update-title-input">Titre</label>
+        <input type="text" id="update-title-input" name="title" required>
+        <label for="update-content-input">Description</label>
+        <textarea id="update-content-input" name="content" rows="3"></textarea>
+        <button type="button" id="update-cancel-btn">Annuler</button>
+        <button type="submit">Enregistrer</button>
+    </form>
+</dialog>
 {% endblock content %}
 
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
 <script defer src="{{ url_for('static', filename='js/ticket_sort_manager.js') }}"></script>
 <script defer src="{{ url_for('static', filename='js/messagerie.js') }}"></script>
+<script defer src="{{ url_for('static', filename='js/ticket_update_manager.js')}}"></script>
 {% endblock scripts %}

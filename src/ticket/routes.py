@@ -1,6 +1,6 @@
 from datetime import timezone
 
-from flask import flash, g, redirect, render_template, request, url_for
+from flask import flash, g, redirect, render_template, request, url_for, jsonify
 
 from src.models import Ticket, User, Channel
 from src.models.database import db
@@ -71,16 +71,16 @@ def create_ticket():
 def edit_ticket(ticket_id: int):
     ticket = db.session.get(Ticket, ticket_id)
     if ticket is None:
-        flash("Ticket introuvable.", "danger")
-        return redirect(url_for("index"))
+        return jsonify({"sucess": False, "error": "Ticket introuvable"}), 404
 
     if not hasattr(g, "user") or g.user is None:
-        flash("Utilisateur introuvable.", "danger")
-        return redirect(url_for("auth.login"))
+        return jsonify({"sucess": False, 
+                        "error": "Utilisateur introuvable"}), 404
 
     if ticket.author_id != g.user.id:
-        flash("Vous ne pouvez modifier que vos propres tickets.", "danger")
-        return redirect(url_for("index"))
+        return jsonify({
+            "sucess": False, 
+            "error": "Vous ne pouvez modifier que vos propres tickets"}), 404
 
     if request.method == "POST":
         title = request.form.get("title", "").strip()
@@ -90,14 +90,16 @@ def edit_ticket(ticket_id: int):
             flash("Le titre et le contenu sont obligatoires.", "danger")
             return redirect(url_for("ticket.edit_ticket", ticket_id=ticket_id))
 
-        ticket.title = title
-        ticket.content = content
-        db.session.commit()
-        flash("Ticket modifié avec succès.", "success")
-        return redirect(url_for("ticket.manage_ticket"))
+        ticket.update(title=title, content=content)
+        return jsonify({
+            "success": True}), 200
+    else:
 
-    return render_template("edit_ticket.html", ticket=ticket)
-
+        return jsonify({
+            "success": True,
+            "title": ticket.title,
+            "content": ticket.content
+        }), 200
 
 @ticket_bp.route("/")
 def manage_ticket():
