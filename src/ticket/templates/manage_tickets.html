@@ -49,7 +49,6 @@
         <label for="author">Auteur</label>
         <input type="search" id="author" name="author" placeholder="nom d'utilisateur" value="{{ current_author }}" autocomplete="off"/>
       </div>
-
     </form>
   </section>
 
@@ -57,7 +56,16 @@
     {% for ticket in tickets %}
       <article class="ticket {{ ticket.categorie }}">
         <div class="ticket-head">
-          <h3>{{ ticket.title }}</h3>
+          <div class="flex align_center">
+            <i class="fa-solid 
+              {% if ticket.categorie == 'question' %}fa-circle-question{% endif %}
+              {% if ticket.categorie == 'bug' %}fa-bug{% endif %}
+              {% if ticket.categorie == 'test' %}fa-flask{% endif %}
+              {% if ticket.categorie == 'git' %}fa-gitlab{% endif %}
+              {% if ticket.categorie == 'other' %}fa-asterisk{% endif %}
+            "></i>
+            <h3>{{ ticket.title }}</h3>
+          </div>
           {% if g.user.id %}
             <div class="status {{ ticket.status }}">
               <form method="post" action="{{ url_for('ticket.status_update_ticket', ticket_id=ticket.id) }}" id="update_status_{{ ticket.id }}">
@@ -75,7 +83,7 @@
         <div class="content_display">
           <p>{{ ticket.content }}</p>
         </div>
-        <div class="space_between align_start">
+        <div class="space_between align_center">
           <small>
             Auteur: <a href="{{ url_for('auth.user_profile', user_id=ticket.author.id) }}">{{ ticket.author.username }}</a> · Créé le {{ ticket.created_at.strftime('%d/%m/%Y %H:%M') }}
           </small>

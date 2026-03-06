@@ -20,12 +20,12 @@
         <!-- ======================================== mode nuit ======================================== -->
         <div class="space_between">
           <div class="cursor_pointer darkLight">
-            <i class="fa-solid fa-moon icon"></i>
+            <i class="fa-solid fa-moon"></i>
           </div>
 
           <!-- ======================================== notifications ======================================== -->
           <div class="cursor_pointer notification">
-            <i class="fa-solid fa-bell icon"></i>
+            <i class="fa-solid fa-bell"></i>
           </div>
 
           <div class="notifications">
@@ -40,25 +40,25 @@
           <div class="cursor_pointer">
             {% if g.user %}
               <div class="account_panel">
-                <i class="fa-solid fa-circle-user icon"></i>
+                <i class="fa-solid fa-circle-user"></i>
                 <span>{{ g.user.username }}{% if g.user.role == "admin" %} (admin){% endif %}</span>
                 <div class="dropdown">
 
                   <!-- $$$$$$$$$$$$ profile $$$$$$$$$$$$ -->
                   <a href="{{ url_for('auth.profile') }}"><div>
-                    <i class="fa-solid fa-address-card icon"></i>
+                    <i class="fa-solid fa-address-card"></i>
                     <span>Profil</span>
                   </div></a>
 
                   <!-- $$$$$$$$$$$$ deconnexion $$$$$$$$$$$$ -->
                   <a href="{{ url_for('auth.logout') }}"><div>
-                    <i class="fa-solid fa-right-from-bracket icon"></i>
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Déconnexion</span>
                   </div></a>
 
                   <!-- $$$$$$$$$$$$ settings $$$$$$$$$$$$ -->
                   <a href="{{ url_for('auth.settings') }}"><div>
-                    <i class="fa-solid fa-gear icon"></i>
+                    <i class="fa-solid fa-gear"></i>
                     <span>Paramètres</span>
                   </div></a>
                 </div>
@@ -67,7 +67,7 @@
             {% else %}
               <a href="{{ url_for('auth.login') }}">
                 <div class="user_connexion">
-                  <i class="fa-solid fa-circle-user icon"></i>
+                  <i class="fa-solid fa-circle-user"></i>
                   <span>Connexion</span>
                 </div>
               </a>
@@ -82,7 +82,7 @@
 
             <!-- ======================================== home ======================================== -->
             <a href="{{ url_for('index') }}"><li class="nav-link">
-                <i class="fa-solid fa-house icon"></i>
+                <i class="fa-solid fa-house"></i>
                   <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" />
                 <span>Home</span>
             </li></a>
@@ -92,17 +92,17 @@
             <li class="withSub">
               <div class="nav-link space_between">
                 <div>       
-                  <i class="fa-solid fa-ticket icon"></i>
+                  <i class="fa-solid fa-ticket"></i>
                   <span>Ticket</span>
                 </div>
-                <i class="fa-solid fa-chevron-right icon"></i>
+                <i class="fa-solid fa-chevron-right"></i>
               </div>
               <ul class="menu-items sub-menu">
 
                 <!-- ======================================== tiket - manage ======================================== -->
                 <a href="{{ url_for('ticket.manage_ticket') }}">
                   <li class="sub-link">
-                  <i class="fa-solid fa-desktop icon"></i>
+                  <i class="fa-solid fa-desktop"></i>
                   <span>Manage Tickets</span>
                   </li>
                 </a>
@@ -110,7 +110,7 @@
                 <!-- ======================================== tiket - ecrire ======================================== -->
                 <a href="{{ url_for('ticket.create_ticket') }}">
                   <li class="sub-link">
-                    <i class="fa-solid fa-square-pen icon"></i>
+                    <i class="fa-solid fa-square-pen"></i>
                     <span>ecrire un ticket</span>
                   </li>
                 </a>
@@ -120,14 +120,14 @@
             {% else %} <!-- ======================================== tiket - non connecter ======================================== -->
 
               <a href="{{ url_for('ticket.manage_ticket') }}"><li class="nav-link">
-                <i class="fa-solid fa-ticket icon"></i>
+                <i class="fa-solid fa-ticket"></i>
                 <span>Ticket</span>
               </li></a>
             {% endif %}
             
             <!-- ======================================== todo tree ======================================== -->
             <a href="{{ url_for('planning.see_planning') }}"><li class="nav-link">
-              <i class="fa-solid fa-map icon"></i>
+              <i class="fa-solid fa-map"></i>
               <span>To-do Tree</span>
             </li></a>
 
@@ -135,17 +135,17 @@
             <li class="withSub">
               <div class="nav-link space_between">
                 <div>
-                  <i class="fa-solid fa-book-bookmark icon"></i>
+                  <i class="fa-solid fa-book-bookmark"></i>
                   <span>Ressources</span>
                 </div>
-                <i class="fa-solid fa-chevron-right icon"></i>
+                <i class="fa-solid fa-chevron-right"></i>
               </div>
               <ul class="menu-items sub-menu">
 
                 <!-- ======================================== TP ======================================== -->
                 <a href="{{ url_for('ressources.ressource_tp') }}">
                   <li class="sub-link">
-                    <i class="fa-solid fa-flask icon"></i>
+                    <i class="fa-solid fa-flask"></i>
                     <span>TP</span>
                   </li>
                 </a>
@@ -153,7 +153,7 @@
                 <!-- ======================================== CM ======================================== -->
                 <a href="{{ url_for('ressources.ressource_cm') }}">
                   <li class="sub-link">
-                    <i class="fa-solid fa-graduation-cap icon"></i>
+                    <i class="fa-solid fa-graduation-cap"></i>
                     <span>CM</span>
                   </li>
                 </a>
@@ -161,7 +161,7 @@
                 <!-- ======================================== Projet ======================================== -->
                 <a href="{{ url_for('ressources.ressource_projet') }}">
                   <li class="sub-link">
-                    <i class="fa-solid fa-chart-pie icon"></i>
+                    <i class="fa-solid fa-chart-pie"></i>
                     <span>Projet</span>
                   </li>
                 </a>

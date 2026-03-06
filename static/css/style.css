@@ -402,7 +402,11 @@ i {
   gap: 1rem;
 }
 
-.align_start {
+.align_center {
   align-items: center;
   margin-bottom: 0.8rem;
+}
+
+.flex {
+  display: flex;
 }
