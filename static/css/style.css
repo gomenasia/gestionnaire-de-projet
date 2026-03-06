@@ -302,17 +302,12 @@ nav a:hover {
   padding: 0.3rem 1.5rem;
 }
 
-.nav-link .fa-chevron-right {
-  position: absolute;
-  right: 20px;
-}
-
 .cursor_pointer {
   cursor: pointer;
 }
 
 .sideBar .withSub {
-  display: block !important;
+  display: block;
 }
 
 .sideBar.close {
