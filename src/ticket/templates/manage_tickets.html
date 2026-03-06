@@ -72,22 +72,29 @@
             <span class="status {{ ticket.status }}">{{ ticket.status.replace('_', ' ').title() }}</span>
           {% endif %}
         </div>
-        <p>{{ ticket.content }}</p>
-        <small>
-          Auteur: <a href="{{ url_for('auth.user_profile', user_id=ticket.author.id) }}">{{ ticket.author.username }}</a> · Créé le {{ ticket.created_at.strftime('%d/%m/%Y %H:%M') }}
-        </small>
+        <div class="content_display">
+          <p>{{ ticket.content }}</p>
+        </div>
+        <div class="space_between align_start">
+          <small>
+            Auteur: <a href="{{ url_for('auth.user_profile', user_id=ticket.author.id) }}">{{ ticket.author.username }}</a> · Créé le {{ ticket.created_at.strftime('%d/%m/%Y %H:%M') }}
+          </small>
+  
+          {% if g.user and g.user.id == ticket.author_id %}
+            <div>
+              <a class="modif_ticket_buton" data-item-id="{{ ticket.id }}">
+                <i class="fa-solid fa-feather"></i>
+                Modifier
+              </a>
+            </div>
+          {% endif %}
+        </div>
 
         {% if ticket.deadline %}
           <div class="deadline {% if is_deadline_late(ticket.deadline, now) and ticket.status != 'resolu' %}late{% endif %}">
             <strong>Échéance:</strong> {{ ticket.deadline.strftime('%d/%m/%Y') }} · {{ format_countdown(ticket.deadline, now) }}
           </div>
         {% endif %}
-
-        {% if g.user and g.user.id == ticket.author_id %}
-          <div class="author-actions">
-            <a class="link-button" data-item-id="{{ ticket.id }}">Modifier mon ticket</a>
-          </div>
-        {% endif %}  <!-- FIXME -->
 
         <div class="messagerie">
           <button class="btn-repondre" data-channel-id="{{ ticket.channel_id }}">

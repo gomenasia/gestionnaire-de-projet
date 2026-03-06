@@ -93,7 +93,7 @@
               <div class="nav-link">
                 <i class="fa-solid fa-ticket icon"></i>
                 <span>Ticket</span>
-                <i class="fa-solid fa-chevron-down icon"></i>
+                <i class="fa-solid fa-chevron-right icon"></i>
               </div>
               <ul class="menu-items sub-menu">
 
@@ -134,7 +134,7 @@
               <div class="nav-link">
                 <i class="fa-solid fa-book-bookmark icon"></i>
                 <span>Ressources</span>
-                <i class="fa-solid fa-chevron-down icon"></i>
+                <i class="fa-solid fa-chevron-right icon"></i>
               </div>
               <ul class="menu-items sub-menu">
 
@@ -172,9 +172,14 @@
     <main>
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-          <section class="messages">
+          <section id="messages" class="messages">
             {% for category, message in messages %}
-              <div class="message {{ category }}">{{ message }}</div>
+              <div class="message {{ category }} space_between">
+                {{ message }}
+                <button>
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
             {% endfor %}
           </section>
         {% endif %}

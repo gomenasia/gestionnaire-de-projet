@@ -1,4 +1,4 @@
-const modifBtns = document.querySelectorAll('.link-button');
+const modifBtns = document.querySelectorAll('.modif_ticket_buton');
 const dialog_update = document.getElementById('update-ticket-dialog')
 let currentItemId = null
 //pour modifier

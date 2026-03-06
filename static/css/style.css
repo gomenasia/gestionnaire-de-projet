@@ -94,6 +94,11 @@ main {
   background: #dbeafe;
 }
 
+.message button {
+  background-color: transparent;
+  padding: 0.2rem;
+}
+
 input,
 textarea,
 select,
@@ -106,8 +111,8 @@ button {
 
 button {
   cursor: pointer;
-  background: #1d4ed8;
-  color: white;
+  background: var(--icon-color);
+  color: var(--body-color);
   border: none;
 }
 
@@ -280,7 +285,7 @@ nav a:hover {
   display: block;
 }
 
-.openSubMenu .fa-angle-right {
+.openSubMenu .fa-chevron-right {
   transform: rotate(90deg);
 }
 
@@ -288,7 +293,7 @@ nav a:hover {
   padding: 0.3rem 1.5rem;
 }
 
-.nav-link .fa-angle-right {
+.nav-link .fa-chevron-right {
   position: absolute;
   right: 20px;
 }
@@ -307,7 +312,7 @@ nav a:hover {
 }
 
 .sideBar.close .nav-link span,
-.sideBar.close .fa-angle-right{
+.sideBar.close .fa-chevron-right{
   display: none;
   transition: all 0.5s ease;
 }
@@ -391,4 +396,9 @@ i {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.align_start {
+  align-items: center;
+  margin-bottom: 0.8rem;
 }

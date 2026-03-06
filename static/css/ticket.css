@@ -55,6 +55,15 @@
     font-size: 0.8rem;
 }
 
+.content_display {
+    background-color: var(--body-color);
+    height: fit-content;
+    width: 100%;
+    padding: 0.5rem 0.3rem;
+    margin: 0.8rem 0;
+    border-radius: 4px;
+}
+
 /* ========================== categorie ========================== */
 
 .ticket.question {
@@ -97,11 +106,7 @@
 
  /* ============================ modif ticket ============================ */
 
-.author-actions {
-    margin-top: 0.5rem;
-}
-
-.link-button { /* TODO remove me */
+.modif_ticket_buton {
     display: inline-block;
     background: #2563eb;
     color: white;
@@ -119,10 +124,8 @@
 
  /* ============================ deadline ============================ */
 .deadline {
-    margin-top: 0.6rem;
-    padding: 0.45rem 0.6rem;
-    border-radius: 8px;
-    background: #eef2ff;
+    margin: 0.6rem;
+    margin-left: 0;
 }
 
 .deadline.late {
@@ -190,6 +193,7 @@
 
 .message_display {
     width: 100%;
+    height: 20rem;
     max-height: 20rem;
     overflow-y: auto;
     border-radius: 8px;

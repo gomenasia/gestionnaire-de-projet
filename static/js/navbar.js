@@ -41,12 +41,23 @@ withSub.forEach((menu) => {
   menu.addEventListener("click", () => {
     menu.classList.toggle("openSubMenu");
     sideBar?.classList.remove("close");
-    notifications?.classList.remove("open");
   });
 });
 
 if (notification && notifications) {
   notification.addEventListener("click", () => {
     notifications.classList.toggle("open");
+  });
+}
+
+const message_display = document.getElementById('messages');
+
+if (message_display) {
+  const fermer_message = message_display.querySelectorAll('button'); // ← guillemets
+
+  fermer_message.forEach((bouton) => {
+    bouton.addEventListener('click', () => {
+      bouton.closest('.message').remove(); // ← supprime le div.message parent
+    });
   });
 }
