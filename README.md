@@ -1,66 +1,81 @@
-# Gestionnaire de tickets
+# Gestionnaire de Tickets
 
-Application web Flask de gestion de demandes (tickets) avec :
+Application web Flask pour gérer des tickets, des tâches et une messagerie temps réel.
 
-- Inscription / connexion des utilisateurs.
-- Création de tickets uniquement pour les utilisateurs connectés.
-- Modification du **propre** ticket (titre + description) par son auteur.
-- Date limite de réponse (deadline) lors de la création de ticket.
-- Gestion des tickets (statut + réponse) uniquement par les admins.
-- Barre de filtres horizontale sur la page principale avec :
-  - filtre par statut (`en_attente`, `en_cours`, `resolu`),
-  - tri (`recent`, `oldest`),
-  - recherche texte dans le contenu/titre,
-  - recherche par auteur,
-  - option pour afficher uniquement les tickets en retard.
-- Menu compte déroulant au survol (profil + déconnexion).
-- Page profil avec : nom, email, rôle admin, nombre de tickets, changement de mot de passe.
-- Stockage SQL via SQLite (remplaçable par un autre SGBD SQL via URI).
+## Fonctionnalités principales
+
+- Authentification: inscription, connexion, déconnexion.
+- Tickets: création, édition par l'auteur, gestion admin (statut + réponse).
+- Profils utilisateurs: informations, statistiques, changement de mot de passe.
+- Planning: gestion des tâches et sous-tâches.
+- Chat temps réel par canal via `Flask-SocketIO`.
+
+## Prérequis
+
+- Python 3.10+
+- `pip`
 
 ## Installation
 
 ```bash
 python -m venv .venv
+```
+
+Linux/macOS:
+```bash
 source .venv/bin/activate
+```
+
+Windows (PowerShell):
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Puis:
+
+```bash
 pip install -r requirements.txt
 ```
 
 ## Lancer l'application
 
+Mode développement (recommandé):
+
 ```bash
-flask --app app run
+python app.py
 ```
 
-L'application sera disponible sur `http://127.0.0.1:5000`.
+Alternative:
 
-## Initialiser la base
+```bash
+python run.py development
+```
 
-La base est créée automatiquement au lancement. Commande disponible aussi :
+Application disponible sur `http://127.0.0.1:5000`.
+
+## Base de données
+
+La base est initialisée automatiquement au démarrage.  
+Commande disponible:
 
 ```bash
 flask --app app init-db
 ```
 
+## Import des données fixtures
+
+```bash
+python -m datafixtures.import_all
+```
+
 ## Tests
 
 ```bash
-pip install pytest
 pytest
 ```
 
-## Rendre un utilisateur admin
-
-Exemple rapide dans un shell Flask :
+## Lancement production
 
 ```bash
-flask --app app shell
-```
-
-Puis :
-
-```python
-from app import db, User
-u = User.query.filter_by(email="admin@example.com").first()
-u.role = "admin"
-db.session.commit()
+python run.py production
 ```

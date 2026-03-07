@@ -8,6 +8,20 @@ version = "0.1.0"
 description = "Ticket management system" 
 readme = "README.md"
 requires-python = ">=3.10"
+dependencies = [
+    "Flask==3.0.3",
+    "Flask-SQLAlchemy==3.1.1",
+    "Flask-SocketIO==5.3.6",
+    "eventlet==0.36.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.2",
+]
+prod = [
+    "gunicorn==22.0.0",
+]
 
 [tool.flake8]
 max-line-length = 110
