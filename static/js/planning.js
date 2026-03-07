@@ -58,17 +58,17 @@ optionBtns.forEach(btn => {
 
             // Ferme tous les autres menus
         document.querySelectorAll('.menu-option').forEach(m => {
-            if (m !== menu) m.classList.remove('active');
+            if (m !== menu) m.classList.add('collapse');
         });
 
         // Toggle celui-ci
-        menu.classList.toggle('active');
+        menu.classList.toggle('collapse');
     });
 });
 
 // Clic ailleurs = ferme tout
 document.addEventListener('click', () => {
-    document.querySelectorAll('.menu-option').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.menu-option').forEach(m => m.classList.add('collapse'));
 });
 
 //modal update de task 

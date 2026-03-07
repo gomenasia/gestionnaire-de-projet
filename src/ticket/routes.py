@@ -5,7 +5,7 @@ from flask import flash, g, redirect, render_template, request, url_for, jsonify
 from src.models import Ticket, User, Channel
 from src.models.database import db
 from src.ticket.utils import format_countdown, is_deadline_late, parse_deadline
-from src.utils import admin_required, get_utc_now, login_required
+from src.utils import send_notification, get_utc_now, login_required
 
 from . import ticket_bp
 
@@ -26,6 +26,13 @@ def status_update_ticket(ticket_id: int):
         return redirect(url_for("index"))
 
     ticket.update(status=status)
+
+    send_notification(
+        user_id=ticket.author_id,
+        message=f"Votre ticket « {ticket.titre} » est {status}",
+        type="statut",
+        ticket_id=ticket.id
+    )
 
     flash("Ticket mis à jour.", "success")
     return redirect(url_for("ticket.manage_ticket"))

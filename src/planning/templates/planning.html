@@ -7,7 +7,7 @@
         {{ item.title }}
         {% if depth<max_depth and item.subtasks %}
             <div class="progressbar" id="{{ item.id }}">
-                <span>Il faut js</span>
+                <span>Il faut js</span> <!-- RECHECK -->
             </div>
         {% endif %}
         {% if depth< max_depth %}
@@ -23,10 +23,10 @@
             <div class="option-wrapper">
                 <button type ="button" class="option-btn"><i class="fa-solid fa-ellipsis"></i></button>
                 <!--Sous menu pour les options-->
-                <div class="menu-option">
-                    <button class="modif-btn" data-item-id="{{ item.id }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                <div class="menu-option collapse">
+                    <button class="modif-btn" data-item-id="{{ item.id }}"><i class="fa-solid fa-pen-to-square"></i>Modifier</button>
                     {% if not item.subtasks %}
-                    <button class="suppr-btn" data-item-id="{{ item.id }}"><i class="fa-solid fa-trash"></i></button>
+                    <button class="suppr-btn" data-item-id="{{ item.id }}"><i class="fa-solid fa-trash"></i>Suprimer</button>
                     {% endif %}
                 </div>
             </div>

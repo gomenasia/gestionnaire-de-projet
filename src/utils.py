@@ -1,7 +1,21 @@
 from functools import wraps
 from datetime import datetime, timezone
 from flask import flash, g, redirect, url_for, request, jsonify
+from app import socketio
+from src.models.notification import Notification
+from functools import wraps
+from sqlalchemy.exc import OperationalError, DatabaseError
 
+def handle_db_errors(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except OperationalError:
+            return jsonify({"error": "Database unavailable"}), 503
+        except DatabaseError as e:
+            return jsonify({"error": "Database error", "detail": str(e)}), 500
+    return wrapper
 
 def get_utc_now():
     return datetime.now(timezone.utc)
@@ -31,3 +45,23 @@ def admin_required(view):
 
     return wrapped_view
 
+def send_notification(user_id, message, type, ticket_id=None):
+    # 1. Persister en base
+    notif = Notification.create(
+        user_id=user_id,
+        message=message,
+        type=type,
+        ticket_id=ticket_id
+    )
+
+    # 2. Envoyer en temps réel via WebSocket
+    socketio.emit(
+        "new_notification",
+        {
+            "message": message,
+            "type": type,
+            "ticket_id": ticket_id,
+            "created_at": notif.created_at.strftime("%d/%m/%Y %H:%M")
+        },
+        room=f"user_{user_id}"   # room privée par utilisateur
+    )

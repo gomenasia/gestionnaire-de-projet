@@ -303,7 +303,8 @@ dialog .modal-actions {
 
 /* Le sous-menu caché par défaut */
 .menu-option {
-    display: none;  /* caché par défaut */
+    display: flex;  
+    flex-direction: column;
     position: absolute;
     top: calc(100%);
     background: white;
@@ -315,9 +316,9 @@ dialog .modal-actions {
     z-index: 100;
 }
 
-/* Visible quand actif */
-.menu-option.active {
-    display: flex;
+/* cacher quand fermer */
+.menu-option.collapse {
+    display: none; /* caché par défaut */
 }
 
 /* Style des boutons dans le menu */
