@@ -31,6 +31,7 @@ document.getElementById('modal-form').addEventListener('submit', async (e) => {
     });
     if (response.ok) {
         dialog_creation.close();
+        alert("aaaaaa")
         location.reload();
     }
     if (response.status === 401) {

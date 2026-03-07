@@ -10,6 +10,25 @@
                 <span>Il faut js</span> <!-- RECHECK -->
             </div>
         {% endif %}
+        {% if item.subtasks %}
+            {% if personnes.get(item.id) %}
+            <div class="list">
+                <p class="assigned">{{ personnes.get(item.id) }}</p>
+            </div>
+            {% endif %}
+        {% else %}
+            {% if item.assign_id %}
+                <p class="assigned">{{ personnes.get(item.id) }}</p>
+            {% else %}
+                {% if depth>1 %}
+                <button 
+                type="button"
+                class="assign-task-btn">
+                    Accepter
+                </button>
+                {% endif %}
+            {% endif %}
+        {% endif %}
         {% if depth< max_depth %}
         <button type="button"
                 class="add-task-btn"

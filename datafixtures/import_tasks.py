@@ -19,14 +19,14 @@ def import_tasks() -> None:
         # Crée la catégorie principale
         parent = Task.find_by_title(task["title"])
         if not parent:
-            parent = Task(title=task["title"], content=task["content"], status=False,deadline=task["deadline"], author_id=task["author"], parent_id=None)
+            parent = Task(title=task["title"], content=task["content"], status=False, author_id=task["author"], parent_id=None)
             db.session.add(parent)
             db.session.flush()  # Force l'attribution de l'ID
         # Crée les sous-catégories
         for sub in task["subtasks"]:
             subtask = Task.find_by_title(sub["title"])
             if not subtask:
-                subtask = Task(title=sub["title"], content=sub["content"], status=False,deadline=sub["deadline"], author_id=sub["author"], parent_id=parent.id)
+                subtask = Task(title=sub["title"], content=sub["content"], status=False, author_id=sub["author"], parent_id=parent.id)
                 db.session.add(subtask)
     db.session.commit()
     print(f"{len(data)} tasks ajoutées.")

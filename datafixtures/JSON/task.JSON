@@ -4,7 +4,6 @@
         "title": "Sprint 1 : Semaines 11-13",
         "content": "Établir les Fondations",
         "status": false,
-        "deadline": null,
         "author": 1,
         "subtasks": [
             {
@@ -12,7 +11,6 @@
                 "title":"Mettre en place l'environnement de développement et de test",
                 "content": "",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -20,7 +18,6 @@
                 "title":"Rédiger les user stories",
                 "content": "",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -28,7 +25,6 @@
                 "title": "Élaborer l'architecture de base de l'application",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -36,7 +32,6 @@
                 "title": "Implémenter le chargement initial d'un sous-ensemble simplifié des données",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -44,7 +39,6 @@
                 "title": "Mettre en place une interface utilisateur (UI) de base avec sélection de granularité et des critères de sélection",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -52,7 +46,6 @@
                 "title": "Produire une des statistiques demandées avec un seul type de diagramme possible",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -60,7 +53,6 @@
                 "title": "Rétrospective de l'équipe pour évaluer le processus SCRUM",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             }
         ]
@@ -70,7 +62,6 @@
         "title": "Sprint 2 : Semaines 14-16",
         "content": "Implémentation des fonctionnalités",
         "status": false,
-        "deadline": null,
         "author": 1,
         "subtasks": [
             {
@@ -78,7 +69,6 @@
                 "title": "Ajouter à l'UI les fonctionnalités pour configurer les statistiques de base",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -86,7 +76,6 @@
                 "title": "Consolider le package visustats en implémentant les éventuels diagrammes manquants",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -94,7 +83,6 @@
                 "title": "Intégrer la génération de rapports en HTML",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -102,7 +90,6 @@
                 "title": "Rétrospective de l'équipe pour évaluer le processus SCRUM",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             }
         ]
@@ -112,7 +99,6 @@
         "title": "Sprint 3 : Semaines 18-20",
         "content": "Finalisation et Livraison",
         "status": false,
-        "deadline": null,
         "author": 1,
         "subtasks": [
             {
@@ -120,7 +106,6 @@
                 "title": "Implémenter le choix du fichier de données",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -128,7 +113,6 @@
                 "title": "Intégration de fonctionnalités additionnelles",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -136,7 +120,6 @@
                 "title": "Terminer l'UI",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -144,7 +127,6 @@
                 "title": "Effectuer des tests finaux et résoudre les problèmes",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -152,7 +134,6 @@
                 "title": "Préparation de la démonstration finale du produit au client",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             },
             {
@@ -160,7 +141,6 @@
                 "title": "Rétrospective de l'équipe pour évaluer le processus SCRUM",
                 "content":"",
                 "status": false,
-                "deadline": null,
                 "author": 1
             }
         ]

@@ -20,8 +20,16 @@ class Task(db.Model):
     # Relation parent-enfant
     parent_id = db.Column(db.Integer, db.ForeignKey('Task.id'), nullable=True)
     parent = db.relationship('Task', remote_side=[id], backref='subtasks')
-    author = db.relationship("User", back_populates="task")
-    assign = db.relationship("User", back_populates="work")
+    author = db.relationship(
+        "User", 
+        foreign_keys=[author_id],
+        back_populates="task"
+    )
+    assign = db.relationship(
+        "User", 
+        foreign_keys=[assign_id],
+        back_populates="work"
+    )
 
     def __repr__(self) -> str:
         return f"<Task {self.title} (status:{self.status})>"

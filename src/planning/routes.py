@@ -1,14 +1,24 @@
 
 
 from flask import jsonify, request, g, render_template, flash
-from src.models import Task
+from src.models import Task, User
 from src.utils import login_required, admin_required
 from . import plan_bp
 
 
 @plan_bp.route("/")
 def see_planning():
-    return render_template("planning.html", planning=Task.find_all())
+    tasks = Task.find_all()
+    if tasks is not None:
+        assigns={}
+        for task in tasks:
+            assign = Task.find_all_childs_asssign(task.id)
+            names=""
+            for participent in assign:
+                user= User.find_by_id(participent)
+                names+= user.username + ","
+            assigns[task.id]= names
+    return render_template("planning.html", planning=Task.find_all(), personnes=assigns)
 
 @plan_bp.route("/addTask", methods=["POST"])
 @login_required

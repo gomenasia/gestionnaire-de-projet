@@ -13,8 +13,16 @@ class User(db.Model):
     role = db.Column(db.String(20), nullable=False, default="user")
 
     tickets = db.relationship("Ticket", back_populates="author", lazy=True)
-    task = db.relationship("Task", back_populates="author")
-    work = db.relationship("Task", back_populates="assign")
+    task = db.relationship(
+        "Task", 
+        foreign_keys="Task.author_id",
+        back_populates="author"
+    )
+    work = db.relationship(
+        "Task", 
+        foreign_keys="Task.assign_id",
+        back_populates="assign"
+    )
     messages = db.relationship("Message", back_populates="author")
 
     def __repr__(self) -> str:

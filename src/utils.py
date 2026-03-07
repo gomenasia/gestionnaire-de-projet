@@ -25,7 +25,7 @@ def login_required(view):
     def wrapped_view(*args, **kwargs):
         if not hasattr(g, "user") or g.user is None:
             # Pour les routes API, on retourne une erreur JSON
-            if request.is_json or request.path.startswith("/api/"):
+            if request.is_json or request.path.startswith("/tasks/"):
                 return jsonify({"error": "Authentification requise", "message":"Vous devez être connecté pour faire cette action."}), 401
             flash("Vous devez être connecté pour accéder à cette page.", "warning")
             return redirect(url_for("auth.login"))
