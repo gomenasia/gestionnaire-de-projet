@@ -8,17 +8,57 @@ from . import plan_bp
 
 @plan_bp.route("/")
 def see_planning():
-    tasks = Task.find_all()
-    if tasks is not None:
-        assigns={}
-        for task in tasks:
-            assign = Task.find_all_childs_asssign(task.id)
-            names=""
-            for participent in assign:
-                user= User.find_by_id(participent)
-                names+= user.username + ","
-            assigns[task.id]= names
-    return render_template("planning.html", planning=Task.find_all(), personnes=assigns)
+    all_tasks = Task.query.all()
+    
+    children_by_parent = {}
+    for task in all_tasks:
+        if task.parent_id:
+            children_by_parent.setdefault(task.parent_id, []).append(task)
+    
+    parent_tasks = [t for t in all_tasks if not t.parent_id]
+    
+    # fonction récursive à l'intérieur car sinon il faudrait mettre le dic children_by_parnet dans les paramêtre et ça risque de prendre de la place
+    def get_descendant_assigns(task_id):
+        assigns = set()
+        for child in children_by_parent.get(task_id, []):
+            if child.assign_id:
+                assigns.add(child.assign_id)
+            assigns.update(get_descendant_assigns(child.id))
+        return assigns
+    
+    all_assign_ids = set()#pour voir tout les utlisateurs qui sont assigné à une tache
+    task_assigns = {}#dictionnare qui stocke l'id de la tache et l'id des assigné de ces sous taches  ou de lui même si pas d'enfants
+    
+    #assign des enfants et lui même si pas enfants
+    for task in all_tasks:
+        descendant_assigns = get_descendant_assigns(task.id)
+        task_assigns[task.id] = descendant_assigns
+        all_assign_ids.update(descendant_assigns)
+        if task.assign_id:
+            all_assign_ids.add(task.assign_id)
+
+    
+    # Charger les users
+    if all_assign_ids:
+        users = {u.id: u.username for u in User.query.filter(User.id.in_(all_assign_ids)).all()}
+    else:
+        users = {}
+    
+    # Construire personnes pour TOUTES les tâches
+    personnes = {}
+    
+    for task in all_tasks:
+        # Si c'est une tâche avec des enfants
+        if task.id in task_assigns and task_assigns[task.id]:
+            personnes[task.id] = ", ".join(users[aid] for aid in task_assigns[task.id] if aid in users)
+        # Si c'est une tâche feuille (assignée directement)
+        elif task.assign_id and task.assign_id in users:
+            personnes[task.id] = users[task.assign_id]
+        else:
+            personnes[task.id] = "Non assigné"
+    
+    return render_template("planning.html", planning=parent_tasks, personnes=personnes)
+
 
 @plan_bp.route("/addTask", methods=["POST"])
 @login_required
@@ -85,7 +125,8 @@ def update(task_id):
 
 
 @plan_bp.route("/<int:task_id>/delete", methods=["DELETE"])
-@admin_required
+@login_required
+#@admin_required TODO remettre le admin required
 def delete(task_id):
     task = Task.find_by_id(task_id)
     if task is None:
@@ -97,3 +138,17 @@ def delete(task_id):
     else:
         return jsonify({"success": False, 
                         "error": "Vous n'avez pas la permission de suppprimer cette task"}), 404
+
+
+@plan_bp.route('/<int:task_id>/assign', methods=["Post"])
+@login_required
+def assign(task_id):
+    task = Task.find_by_id(task_id)
+    if task is None:
+        return jsonify({"success": False, "error": "Task non trouvée"}), 404
+    if User.find_by_id(g.user.id) is not None:
+        task.update(assign_id=g.user.id)
+        return jsonify({
+            "success": True}), 200
+    else:
+        return jsonify({"success": False, "error": "Utilisateur non trouvée"}), 404

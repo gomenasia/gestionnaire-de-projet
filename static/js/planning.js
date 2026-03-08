@@ -1,9 +1,9 @@
-
 const dialog_creation = document.getElementById('task-dialog');
 const dialog_update = document.getElementById('update-task-dialog')
 const optionBtns = document.querySelectorAll('.option-btn');
 const modifBtns = document.querySelectorAll('.modif-btn');
 const suprBtns= document.querySelectorAll('.suppr-btn')
+const assBtns = document.querySelectorAll('.assign-task-btn')
 let currentItemId = null;
 
 //MOdal de creation de tache
@@ -140,6 +140,27 @@ suprBtns.forEach((supr) => {
                 location.reload();
             } else {
                 console.log('success = false');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur catch:', error);
+        });
+    });
+});
+
+//assign
+assBtns.forEach((ass)=> {
+    ass.addEventListener('click', ()=> {
+        const currentItemId = ass.dataset.itemId;
+
+        fetch(`/tasks/${currentItemId}/assign`,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response =>response.json())
+        .then(data =>{
+            if(data.success){
+                location.reload();
             }
         })
         .catch(error => {

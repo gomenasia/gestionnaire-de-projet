@@ -108,11 +108,6 @@ class Task(db.Model):
     def find_parent_by_parent_id(cls, parent_id:int) -> Optional["Task"]:
         return cast(Optional["Task"], cls.query.filter_by(id=parent_id).first())
 
-    @classmethod
-    def find_all_childs_asssign(cls, parent_id:int) -> list[int]:
-        subtasks = Task.find_subtasks_by_parent_id(parent_id)
-        assign_ids = [sub.assign_id for sub in subtasks if sub.assign_id is not None]
-        return assign_ids
 
     @property
     def completion_count(self) -> int:
