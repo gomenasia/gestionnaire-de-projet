@@ -53,8 +53,7 @@ def send_notification(user_id: int, message: str, notification_type: str, ticket
         {
             "message": message,
             "notification_type": notification_type,
-            "ticket_id": ticket_id,
-            "created_at": notif.created_at.strftime("%d/%m/%Y %H:%M")
+            "ticket_id": ticket_id
         },
         room=f"user_{user_id}"   # room privée par utilisateur
     )
