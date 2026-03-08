@@ -37,14 +37,12 @@ def see_planning():
         if task.assign_id:
             all_assign_ids.add(task.assign_id)
 
-    
     # Charger les users
     if all_assign_ids:
         users = {u.id: u.username for u in User.query.filter(User.id.in_(all_assign_ids)).all()}
     else:
         users = {}
     
-    # Construire personnes pour TOUTES les tâches
     personnes = {}
     
     for task in all_tasks:
