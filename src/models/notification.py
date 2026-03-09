@@ -19,7 +19,7 @@ class Notification(db.Model):
     @classmethod
     def find_by_user(cls, user_id: int) -> list["Notification"]:
         """Retourne les notif destiner a un user"""
-        return cast(list["Notification"], cls.query.filter_by(user_id=user_id).all())
+        return cast(list["Notification"], cls.query.filter_by(user_id=user_id).order_by(cls.created_at.desc()).all())
 
 
     def to_dict(self) -> dict:

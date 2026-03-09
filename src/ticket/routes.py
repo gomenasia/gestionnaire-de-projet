@@ -111,9 +111,6 @@ def edit_ticket(ticket_id: int):
 
 @ticket_bp.route("/")
 def manage_ticket():
-    send_notification(1, "feur", "osef", None) # TODO remove me
-
-
     """Affiche la liste des tickets avec filtres, recherche et tri."""
     status = request.args.get("status", "all")
     sort = request.args.get("sort", "recent")

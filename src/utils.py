@@ -2,8 +2,8 @@ from functools import wraps
 from datetime import datetime, timezone
 from flask import flash, g, redirect, url_for, request, jsonify
 from functools import wraps
-from app import socketio
 from sqlalchemy.exc import OperationalError, DatabaseError
+import pytz
 
 def handle_db_errors(f):
     @wraps(f)
@@ -18,6 +18,10 @@ def handle_db_errors(f):
 
 def get_utc_now():
     return datetime.now(timezone.utc)
+
+def convert_to_local_timzone(utc):
+    paris_tz = pytz.timezone("Europe/Paris")
+    return utc.astimezone(paris_tz)
 
 
 def login_required(view):

@@ -32,11 +32,22 @@ def get_messages(channel_id):
 
 @api_bp.route('/session')
 def get_session():
+    user_id = session.get('user_id')
+    
+    if not user_id:
+        return jsonify({
+            'success': False,
+            'user_id': None,
+            'username': None,
+            'role': None
+        }), 401
+
     return jsonify({
-        'user_id': session.get('user_id'),
+        'success': True,
+        'user_id': user_id,
         'username': session.get('username'),
         'role': session.get('role')
-    })
+    }), 200
 
 @api_bp.route('/notification/<int:user_id>')
 @handle_db_errors
