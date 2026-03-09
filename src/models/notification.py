@@ -49,4 +49,4 @@ class Notification(db.Model):
 
     def save(self) -> None:
         db.session.add(self)
-        db.session.commit()
+        db.session.commit() 

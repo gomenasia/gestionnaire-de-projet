@@ -5,7 +5,8 @@ from flask import flash, g, redirect, render_template, request, url_for, jsonify
 from src.models import Ticket, User, Channel
 from src.models.database import db
 from src.ticket.utils import format_countdown, is_deadline_late, parse_deadline
-from src.utils import send_notification, get_utc_now, login_required
+from src.utils import get_utc_now, login_required
+from src.service import send_notification
 
 from . import ticket_bp
 
@@ -110,6 +111,9 @@ def edit_ticket(ticket_id: int):
 
 @ticket_bp.route("/")
 def manage_ticket():
+    send_notification(1, "feur", "osef", None) # TODO remove me
+
+
     """Affiche la liste des tickets avec filtres, recherche et tri."""
     status = request.args.get("status", "all")
     sort = request.args.get("sort", "recent")

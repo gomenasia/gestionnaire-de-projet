@@ -43,22 +43,3 @@ def admin_required(view):
         return view(*args, **kwargs)
 
     return wrapped_view
-
-def send_notification(user_id: int, message: str, notification_type: str, ticket_id: int =None):
-    notif = url_for("api.create_notif",
-                    user_id=user_id,
-                    message=message,
-                    notification_type=notification_type,
-                    ticket_id=ticket_id)
-    
-
-    # Envoyer en temps réel via WebSocket
-    socketio.emit(
-        "new_notification",
-        {
-            "message": message,
-            "notification_type": notification_type,
-            "ticket_id": ticket_id
-        },
-        room=f"user_{user_id}"   # room privée par utilisateur
-    )
