@@ -5,7 +5,7 @@
         ? window.io({ transports: ["websocket", "polling"] })
         : null
 
-    function showNotificationToast(message, type) {  // ============= afiche les notification en pop up=============
+    function showNotificationToast(message, type) {  //TODO ============= afiche les notification en pop up=============
         const toast = document.createElement("div");
         toast.className = `toast toast--${type}`;
         toast.textContent = message;
@@ -24,7 +24,7 @@
     const content_notifications = document.querySelector(".notification");
     const list_notification = document.querySelector(".notifications");
 
-    if (content_notifications) {                          // ============= afiche les notification =============
+    if (content_notifications) {                          // ============= afiche la div notification =============
         content_notifications.addEventListener("click", () => {
             list_notification.classList.toggle("open")
             if (list_notification && list_notification.classList.contains("open")) {
