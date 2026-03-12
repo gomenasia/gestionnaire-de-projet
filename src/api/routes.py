@@ -2,7 +2,7 @@
 
 from flask import jsonify, request, session
 from src.models import Ticket, Notification, Task, Message
-from src.utils import handle_db_errors
+from src.utils import handle_db_errors, login_required
 from . import api_bp
 
 
@@ -53,41 +53,64 @@ def get_session():
 
 @api_bp.route('/notification/<int:user_id>')
 @handle_db_errors
+@login_required
 def get_notif_by_user(user_id):
     notifs = Notification.find_by_user(user_id)
     return jsonify([notification.to_dict() for notification in notifs]), 200
 
-@api_bp.route('/notification/unread-counts', methods=['GET']) #RECHECK
-def unread_counts():
+@api_bp.route('/notification/unread-counts', methods=['GET'])
+@handle_db_errors
+@login_required
+def unread_notification_counts():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({}), 401
 
-    counts = (
-        db.session.query(Message.sender_id, func.count(Message.id).label('count'))
-        .filter(Message.receiver_id == user_id, Message.is_read == False)
-        .group_by(Message.sender_id)
-        .all()
-    )
-    return jsonify({str(row.sender_id): row.count for row in counts})
+    count = Notification.get_notif_count_by_user(user_id)
+
+    return jsonify({"count": count}), 200
 
 
 @api_bp.route('/notification/mark-read', methods=['POST'])
-def mark_as_read():
+def mark_notification_as_read():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'error': 'Non authentifié'}), 401
 
-    data = request.get_json()
-    sender_id = data.get('sender_id')
-
-    updated = (
-        Message.query
-        .filter_by(sender_id=sender_id, receiver_id=user_id, is_read=False)
-        .update({'is_read': True})
-    )
-    db.session.commit()
-    return jsonify({'updated': updated})
+    updated = Notification.marke_all_read(user_id)
+    return jsonify({'updated': updated}), 200
 
 
     # ===================================== MESSAGE ==============================
+
+
+# ── Nb de messages non lus par ticket (pour moi) ──────────
+@api_bp.route('/messages/unread-counts', methods=['GET'])
+@handle_db_errors
+@login_required
+def unread_message_counts():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({}), 401
+
+    # Messages dont je suis PAS l'auteur et que je n'ai PAS lus
+    count_by_channel = Message.get_unread_counts_by_channel(user_id)
+
+    return jsonify({Ticket.find_by_channel_id(channel_id).id : count for channel_id, count in count_by_channel}), 200
+
+
+# ── Marquer tous les messages d'un ticket comme lus ───────
+@api_bp.route('/messages/mark-read', methods=['POST'])
+@handle_db_errors
+@login_required
+def mark_message_as_read():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'Non authentifié'}), 401
+
+    data      = request.get_json()
+    ticket = Ticket.find_by_id(data.get('ticket_id'))
+
+    count_unread_msgs = Message.mark_channel_as_read(ticket.channel_id, user_id)
+
+    return jsonify({'marked': count_unread_msgs}), 200

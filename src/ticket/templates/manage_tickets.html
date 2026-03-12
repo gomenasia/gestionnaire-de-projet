@@ -54,7 +54,7 @@
 
   <section class="ticket-list">
     {% for ticket in tickets %}
-      <article class="ticket {{ ticket.categorie }}">
+      <article class="ticket {{ ticket.categorie }}" id="{{ ticket.id }}">
         <div class="ticket-head">
           <div class="flex align_center">
             <i class="fa-solid 
@@ -105,9 +105,14 @@
         {% endif %}
 
         <div class="messagerie">
-          <button class="btn-repondre" data-channel-id="{{ ticket.channel_id }}">
-            <i class="fa-solid fa-chevron-right"></i> Répondre au ticket
-          </button>
+          <div>
+            <button class="btn-repondre" data-channel-id="{{ ticket.channel_id }}" data-ticket_id="{{ ticket.id }}">
+              <i class="fa-solid fa-chevron-right"></i> Répondre au ticket
+            </button>
+            <span class="unread-badge">
+
+            </span>
+          </div>
 
           <div id="discussion-{{ ticket.channel_id }}" class="discussion collapsed">
             <!-- Messages chargés depuis Jinja -->

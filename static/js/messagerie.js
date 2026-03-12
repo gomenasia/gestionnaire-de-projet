@@ -1,9 +1,9 @@
 (() => {
+    const CURRENT_USER_ID   = parseInt(document.body.dataset.userId);
     const ticketList = document.querySelector(".ticket-list")
     if (!ticketList) {
         return
-    }        
-
+    }
 
     const socket = typeof window.io === "function"
         ? window.io({ transports: ["websocket", "polling"] })
@@ -15,6 +15,7 @@
     document.querySelectorAll(".btn-repondre").forEach((btn) => {
         btn.addEventListener("click", () => {
             const channelId = btn.dataset.channelId
+            const ticketlId = btn.dataset.ticketId
             const panel = document.querySelector(`#discussion-${channelId}`)
             if (!panel) {
                 return
@@ -27,6 +28,8 @@
                 socket.emit("join", { channel_id: Number(channelId) })
                 joinedChannels.add(channelId)
 
+                openTicketChat(ticketlId)
+
                 const messagerie = document.getElementById(`message_display-${channelId}`)
                 messagerie.scrollTop = messagerie.scrollHeight;
 
@@ -35,6 +38,106 @@
             }
         })
     })
+
+   // =============================================== UNREAD =============================================
+
+    const unreadCounts      = {};   // { "chanelId": count }
+    let   pollingInterval   = null;
+
+    // ── Init ──────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+        loadUnreadCounts();
+        startPolling();
+    });
+
+    // ── Polling toutes les 10 secondes ────────────────────────
+    function startPolling() {
+        pollingInterval = setInterval(async () => {
+            await loadUnreadCounts();
+        }, 10_000); // 10s — ajuste selon tes besoins
+    }
+
+    function stopPolling() {
+        clearInterval(pollingInterval);
+    }
+
+    // ── Fetch les compteurs depuis l'API ──────────────────────
+    async function loadUnreadCounts() {
+        try {
+            const res  = await fetch('/api/messages/unread-counts');
+            if (!res.ok) return;
+            const data = await res.json();  // {(channel_id, count)} { 12: 3, 7: 1 }
+
+            Object.entries(data).forEach(([ticketId, count]) => {
+                unreadCounts[ticketId] = count;
+                updateBadge(ticketId);
+            });
+
+            // Remettre à 0 les tickets qui n'apparaissent plus dans la réponse
+            Object.keys(unreadCounts).forEach(ticketId => {
+                if (!(ticketId in data)) {
+                    unreadCounts[ticketId] = 0;
+                    updateBadge(ticketId);
+                }
+            });
+
+        } catch (e) {
+            console.warn('Polling non-lus échoué :', e);
+        }
+    }
+
+    // ── Ouvrir un ticket ──────────────────────────────────────
+    async function openTicketChat(ticketId) {
+        // Reset badge immédiatement
+        unreadCounts[String(ticketId)] = 0;
+        updateBadge(String(ticketId));
+
+        // Marquer comme lu côté serveur
+        await fetch('/api/messages/mark-read', {
+            method:  'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ticket_id: ticketId }),
+        });
+    }
+
+    // ── Badge UI ──────────────────────────────────────────────
+    function updateBadge(ticketId) {
+        const item = document.querySelector(`article.ticket[id="${ticketId}"]`);
+        if (!item) return;
+
+        let badge = item.querySelector('.unread-badge');
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'unread-badge';
+            item.appendChild(badge);
+        } else{
+            alert("badge non reconue") //TODO remove debug
+        }
+
+        const count = unreadCounts[ticketId] || 0;
+        if (count > 0) {
+            badge.textContent = count > 99 ? '99+' : count;
+            badge.classList.add('show');
+            item.classList.add('has-unread');
+        } else {
+            badge.classList.remove('show');
+            item.classList.remove('has-unread');
+        }
+    }
+
+    // ── Pause polling si onglet caché (économie réseau) ───────
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopPolling();
+        } else {
+            loadUnreadCounts();  // refresh immédiat au retour
+            startPolling();
+        }
+    });
+
+    // =================================================== SOCKETIO ===========================================
 
     if (!socket) {
         // Pas de transport temps réel disponible: on garde le comportement UI (toggle) uniquement.

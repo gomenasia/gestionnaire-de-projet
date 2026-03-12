@@ -9,7 +9,7 @@ from src.utils import get_utc_now
 class Channel(db.Model):
     "Modèle representant une discution"
 
-    __tablename__ = "channel"
+    __tablename__ = "Channel"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)

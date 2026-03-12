@@ -29,7 +29,7 @@ def status_update_ticket(ticket_id: int):
     ticket.update(status=status)
 
     send_notification(
-        user_id=ticket.author_id,
+        receiver_id=ticket.author_id,
         message=f"Votre ticket « {ticket.title} » est {status}",
         notification_type="statut",
         ticket_id=ticket.id

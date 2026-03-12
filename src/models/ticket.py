@@ -10,7 +10,7 @@ class Ticket(db.Model):
     Modèle Ticket représentant un ticket de support.
     """
 
-    __tablename__ = "ticket"
+    __tablename__ = "Ticket"
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
@@ -21,10 +21,10 @@ class Ticket(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: get_utc_now(), nullable=False)
     updated_at = db.Column(db.DateTime(timezone=True), default=lambda: get_utc_now(), nullable=False)
 
-    author_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
     author = db.relationship("User", back_populates="tickets")
 
-    channel_id = db.Column(db.Integer, db.ForeignKey("channel.id"), nullable=True)
+    channel_id = db.Column(db.Integer, db.ForeignKey("Channel.id"), nullable=True)
 
     channel = db.relationship("Channel", back_populates="ticket")
 
@@ -56,7 +56,10 @@ class Ticket(db.Model):
         """Retourne la liste de tous les tickets de la categorie specifier."""
         return cast(list[Ticket], cls.query.filter_by(categorie = targeted_categorie).order_by(Ticket.created_at.desc()).all())
     
-
+    @classmethod
+    def find_by_channel_id(cls, channel_id: int) -> "Ticket | None":
+        """renoie le ticket lier au channel si il exist"""
+        return cast("Ticket | None", cls.query.get({"channel_id": channel_id}))
 
     def to_dict(self) -> dict:
         return {

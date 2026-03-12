@@ -5,13 +5,16 @@ from src.utils import get_utc_now
 from src.models.database import db
 
 class Notification(db.Model):
+
+    __tablename__ = "Notification"
+
     id          = db.Column(db.Integer, primary_key=True)
-    user_id     = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user_id     = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
     message     = db.Column(db.String(255), nullable=False)
     type        = db.Column(db.String(50))        # ex: "statut", "reponse", "deadline"
-    ticket_id   = db.Column(db.Integer, db.ForeignKey("ticket.id"))
+    ticket_id   = db.Column(db.Integer, db.ForeignKey("Ticket.id"))
     is_read     = db.Column(db.Boolean, default=False)
-    created_at  = db.Column(db.DateTime, default=get_utc_now())
+    created_at  = db.Column(db.DateTime, default=get_utc_now)
 
     user   = db.relationship("User", backref="notifications")
     ticket = db.relationship("Ticket", backref="notifications")
@@ -21,6 +24,16 @@ class Notification(db.Model):
         """Retourne les notif destiner a un user"""
         return cast(list["Notification"], cls.query.filter_by(user_id=user_id).order_by(cls.created_at.desc()).all())
 
+    @classmethod
+    def marke_all_read(cls, receiver_id) -> list["Notification"]:
+        """marque comme lu les notification detiner a user"""
+        updated = cls.query.filter_by(user_id=receiver_id, is_read=False).update({'is_read': True})
+        db.session.commit()
+        return cast(list["Notification"], updated)
+
+    @classmethod
+    def get_notif_count_by_user(cls, receiver_id) -> int:
+        return cls.query.filter_by(user_id=receiver_id, is_read=False).count()
 
     def to_dict(self) -> dict:
         return {

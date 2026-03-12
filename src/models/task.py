@@ -14,8 +14,8 @@ class Task(db.Model):
     content = db.Column(db.Text, nullable=False)
     status = db.Column(db.Boolean, default=False, nullable=False)
 
-    author_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    assign_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
+    author_id = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
+    assign_id = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=True)
 
     # Relation parent-enfant
     parent_id = db.Column(db.Integer, db.ForeignKey('Task.id'), nullable=True)

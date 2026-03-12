@@ -11,7 +11,7 @@
     <script defer src="{{ url_for('static', filename='js/navbar.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/notification_connect.js') }}"></script>
   </head>
-  <body>
+  <body data-user-id="{{ session['user_id'] }}">
     <header>
       <nav class="navBar">
         <div class="logo sidebarOpen">
@@ -27,6 +27,7 @@
           <!-- ======================================== notifications ======================================== -->
           <div class="cursor_pointer notification">
             <i class="fa-solid fa-bell"></i>
+            <span class="notif_badge collapsed"></span>
           </div>
 
           <div class="notifications">

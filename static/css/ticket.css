@@ -219,10 +219,6 @@
     background-color: var(--third-color);
 }
 
-.discussion.collapsed {
-    display: none;
-}
-
 /* Gestion du pop up*/
 /* POP UP*/
 dialog {

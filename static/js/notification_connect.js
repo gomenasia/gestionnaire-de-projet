@@ -1,5 +1,6 @@
 
 (() => {
+    const CURRENT_USER_ID   = parseInt(document.body.dataset.userId);
     // Charger socket.io depuis le CDN ou depuis Flask-SocketIO
     const socket = typeof window.io === "function"
         ? window.io({ transports: ["websocket", "polling"] })
@@ -14,10 +15,10 @@
     }
 
     function updateNotificationBadge() {             // ============= compte le nombre de notif ============
-        const badge = document.querySelector(".notif-badge");
+        const badge = document.querySelector(".notif_badge");
         if (badge) {
             badge.textContent = parseInt(badge.textContent || 0) + 1;
-            badge.style.display = "inline";
+            badge.classList.remove("collapsed");
         }
     }
 
@@ -27,22 +28,15 @@
     if (content_notifications) {                          // ============= afiche la div notification =============
         content_notifications.addEventListener("click", () => {
             list_notification.classList.toggle("open")
+            const badge = document.querySelector(".notif_badge");
+            if (badge) {
+                badge.textContent = 0;
+                badge.classList.add("collapsed")
+            }
             if (list_notification && list_notification.classList.contains("open")) {
-                fetch(`/api/session`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then((data) => {
-                        if (data.success) {
-                            update_notif_display(data.user_id);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Erreur lors de la récupération de la session:', error);
-                    });
+                if (CURRENT_USER_ID){
+                    update_notif_display(CURRENT_USER_ID);
+                }
             }
         });
     }
@@ -85,12 +79,8 @@
         showNotificationToast(data.message, data.type);
         updateNotificationBadge();  // incrémenter le compteur dans le menu
 
-        fetch(`/api/session`)
-            .then(response => response.json())
-            .then((data) => {
-                if(data.success){
-                    update_notif_display(data.user_id)
-                }
-            })
+        if (CURRENT_USER_ID){
+            update_notif_display(CURRENT_USER_ID);
+        }
     });
 })()

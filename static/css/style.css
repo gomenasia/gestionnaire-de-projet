@@ -71,7 +71,14 @@ main {
 }
 
  /* ========================== messages ========================== */
+.messages { /* conteneur */
+  position: relative;
+  top: 0;
+} 
+
 .message {
+  position: relative;
+  top: 0;
   margin: 0.5rem auto;
   max-width: 1080px;
   padding: 0.8rem;
@@ -373,9 +380,14 @@ nav a:hover {
   display: block;
 }
 
-i {
-    margin-right: 0.5rem;
-    color: var(--icon-color);
+.toast{
+  position: relative;
+  top: 0px;
+  right: 0px;
+}
+
+.toast--type{
+  /*TODO*/
 }
 
 /* ===================== common =====================*/
@@ -391,6 +403,10 @@ i {
   width: fit-content;
   height: fit-content;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.collapsed {
+  display: none;
 }
 
 .w_100 {
@@ -419,4 +435,9 @@ i {
 
 .flex {
   display: flex;
+}
+
+i {
+    margin-right: 0.5rem;
+    color: var(--icon-color);
 }

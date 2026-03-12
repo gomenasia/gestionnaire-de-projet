@@ -317,11 +317,6 @@ dialog .modal-actions {
     z-index: 100;
 }
 
-/* cacher quand fermer */
-.menu-option.collapse {
-    display: none; /* caché par défaut */
-}
-
 /* Style des boutons dans le menu */
 .menu-option button {
     display: flex;

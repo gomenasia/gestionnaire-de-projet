@@ -57,6 +57,10 @@ def index():
     """Affiche la page d'accueil avec la liste des tickets."""
     return render_template("index.html")
 
+@app.route("/health")
+def health():
+    return {"status": "ok"}, 200
+
 
 @app.cli.command("init-db")
 def init_db_command():
@@ -66,10 +70,6 @@ def init_db_command():
 
 with app.app_context():
     db.create_all()
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
+    
 if __name__ == "__main__":
     socketio.run(app, debug=True)
