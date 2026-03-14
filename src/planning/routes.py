@@ -52,8 +52,6 @@ def see_planning():
         # Si c'est une tâche feuille (assignée directement)
         elif task.assign_id and task.assign_id in users:
             personnes[task.id] = users[task.assign_id]
-        else:
-            personnes[task.id] = "Non assigné"
     
     return render_template("planning.html", planning=parent_tasks, personnes=personnes)
 

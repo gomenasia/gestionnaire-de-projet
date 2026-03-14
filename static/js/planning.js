@@ -31,7 +31,6 @@ document.getElementById('modal-form').addEventListener('submit', async (e) => {
     });
     if (response.ok) {
         dialog_creation.close();
-        alert("aaaaaa")
         location.reload();
     }
     if (response.status === 401) {
@@ -57,11 +56,13 @@ optionBtns.forEach(btn => {
 
         const menu = btn.nextElementSibling; // le .menu-option juste après
 
-            // Ferme tous les autres menus
+        // Ferme tous les autres menus
         document.querySelectorAll('.menu-option').forEach(m => {
-            if (m !== menu) m.classList.add('collapsed');
+            if (m !== menu){
+                m.classList.add('collapsed');
+            }
+            
         });
-
         // Toggle celui-ci
         menu.classList.toggle('collapsed');
     });
@@ -168,3 +169,6 @@ assBtns.forEach((ass)=> {
         });
     });
 });
+
+
+

@@ -36,6 +36,7 @@ summary {
     background-color: var(--primary-color);
     border-radius: 10px;
     overflow: visible;
+    width: 100%;
 }
 
 summary::before {
@@ -327,6 +328,9 @@ dialog .modal-actions {
     padding: 8px;
     border-radius: 6px;
     transition: background-color 0.2s ease;
+}
+.collapsed{
+    display: none;
 }
 
 .menu-option button:hover {
