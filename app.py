@@ -4,9 +4,7 @@ Configure l'application, initialise la base de données, et définit les routes 
 import os
 
 from flask import Flask, render_template
-from flask_socketio import SocketIO
-
-socketio = SocketIO() # permet la connexion au canal de comunication
+from src.extensions import socketio
 
 from config import config
 from src.api import api_bp

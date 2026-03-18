@@ -1,5 +1,5 @@
 from src.models import Notification
-from app import socketio
+from src.extensions import socketio
 
 def send_notification(receiver_id, message, notification_type, ticket_id=None):
     Notification.create(

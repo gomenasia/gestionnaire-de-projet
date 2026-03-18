@@ -1,7 +1,7 @@
 Flask==3.0.3
 Flask-SQLAlchemy==3.1.1
 Flask-SocketIO==5.3.6
-eventlet==0.36.1
+gevent==24.11.1
 gunicorn==22.0.0
 pytest==8.3.2
 djlint==1.36.4

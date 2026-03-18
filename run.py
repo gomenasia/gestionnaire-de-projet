@@ -32,7 +32,7 @@ def main() -> None:
 
     if env_name == "development":
         print("📍 URL: http://localhost:5000")
-        os.system("flask run --reload")
+        subprocess.run([sys.executable, "app.py"], check=False)
     else:
         print("📍 Mode production - Lancement avec Gunicorn")
         print("📍 URL: http://localhost:8000")

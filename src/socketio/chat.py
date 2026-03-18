@@ -1,7 +1,7 @@
 from flask_socketio import emit, join_room
 
 from flask import  session
-from app import socketio
+from src.extensions import socketio
 from src.models import User
 from src.models.message import Message
 

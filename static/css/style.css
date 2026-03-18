@@ -348,6 +348,14 @@ nav a:hover {
 }
 
 /* ================== notif ====================*/
+.notification {
+  display: flex;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
 .notifications {
   position: absolute;
   top: 75px;

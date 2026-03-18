@@ -64,19 +64,19 @@
         }); 
     }
 
-
     if (!socket) {
-        // Pas de transport temps réel disponible: on garde le comportement UI (toggle) uniquement.
+        // Pas de transport temps réel disponible: on garde le comportement UI (toggle) uniquement
         return
     }
 
     socket.on("connect", () => {
-        console.log("WebSocket connecté");
+        console.log("======================================================== WebSocket connecté");
     });
 
     // Écouter les nouvelles notifications
-    socket.on("new_notification", (data) => {
-        showNotificationToast(data.message, data.type);
+    socket.on("new_notification", (notif) => {
+        alert("debug notif")
+        showNotificationToast(notif.message, notif.type);
         updateNotificationBadge();  // incrémenter le compteur dans le menu
 
         if (CURRENT_USER_ID){
